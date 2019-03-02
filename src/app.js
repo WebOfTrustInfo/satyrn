@@ -33,3 +33,21 @@ document.querySelector("#author").innerHTML = manifest.author;
 document.querySelector("#env").innerHTML = env.name;
 document.querySelector("#electron-version").innerHTML =
   process.versions.electron;
+
+
+console.oldLog = console.log;
+console.log = function(value)
+{
+    console.oldLog(value);
+    return value;
+};
+
+const output = eval('console.log("hello")');
+
+function run(editor,outputDiv) {
+  const code =editor.getValue()
+  const output = eval(code)
+  document.querySelector("#"+outputDiv).innerHTML = output
+}
+
+window.run = run

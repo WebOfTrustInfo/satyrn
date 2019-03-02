@@ -35,13 +35,18 @@
     </p>
 
   <div id="showdownBlock">
-    <input type="button" onclick="window.alert('a')" value="Run" />
+    <input type="button" onclick="run(editor,'outputDiv')" value="Run" />
     <pre id="editor">function foo(items) {
         var i;
         for (i = 0; i &lt; items.length; i++) {
             alert("Ace Rocks " + items[i]);
         }
-    }</pre>
+    }
+    foo(["A","B"])
+    console.log("OUTPUT");
+    </pre>
+    <pre id="outputDiv">
+    </pre>
   </div>
 </div>
 
