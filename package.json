@@ -31,7 +31,8 @@
     "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
   },
   "dependencies": {
-    "fs-jetpack": "^2.1.0"
+    "fs-jetpack": "^2.1.0",
+    "showdown": "^1.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.54",

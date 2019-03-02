@@ -45,15 +45,37 @@
         }
     }</pre>
   </div>
+  <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()"># hello, markdown!</textarea>
+  <div id="markdown">
+
+  </div>
 </div>
 
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="app.js"></script>
 
 <script>
-    var editor = ace.edit("editor");
+  const showdown  = require('showdown');
+
+  const editor = ace.edit("editor");
+  const converter = new showdown.Converter();
+
+  function init() {
     editor.setTheme("ace/theme/twilight");
     editor.session.setMode("ace/mode/javascript");
+
+    const text = document.getElementById("textarea").value;
+    const html  = converter.makeHtml(text);
+    document.querySelector("#markdown").innerHTML = html;
+  }
+
+  function handleTextChange() {
+    const text = document.getElementById("textarea").value;
+    const html  = converter.makeHtml(text);
+    document.querySelector("#markdown").innerHTML = html;
+  }
+
+  init();
 </script>
 
 
