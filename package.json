@@ -43,6 +43,7 @@
     "electron": "2.0.2",
     "electron-builder": "^20.15.1",
     "electron-mocha": "^6.0.4",
+    "electron-reload": "^1.4.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "mocha": "^5.2.0",
     "source-map-support": "^0.5.6",
