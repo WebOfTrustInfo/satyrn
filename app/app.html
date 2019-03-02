@@ -16,6 +16,7 @@
     }
 
   </style>
+  <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 
@@ -35,7 +36,10 @@
     </p>
 
   <div id="showdown-js-editor">
-    <input type="button" onclick="window.alert('a')" value="Run" />
+    <script>
+      var editor = null;
+    </script>
+    <input type="button" onclick="run(editor,'outputDiv')" value="Run" />
     <input type="button" onclick="window.alert('a')" value="Refresh" />
 
     <pre id="editor">function foo(items) {
@@ -43,7 +47,15 @@
         for (i = 0; i &lt; items.length; i++) {
             alert("Ace Rocks " + items[i]);
         }
-    }</pre>
+    }
+    foo(["A","B"])
+    console.log("OUTPUT");
+    </pre>
+    <script>
+      var editor = ace.edit("editor");
+    </script>
+    <pre id="outputDiv">
+    </pre>
   </div>
   <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()"># hello, markdown!</textarea>
   <div id="markdown">
