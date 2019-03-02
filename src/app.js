@@ -26,7 +26,7 @@ const osMap = {
   linux: "Linux"
 };
 
-document.querySelector("#app").style.display = "block";
+
 document.querySelector("#greet").innerHTML = greet();
 document.querySelector("#os").innerHTML = osMap[process.platform];
 document.querySelector("#author").innerHTML = manifest.author;
