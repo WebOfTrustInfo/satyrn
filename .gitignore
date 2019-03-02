@@ -3,6 +3,8 @@ node_modules
 Thumbs.db
 *.log
 
+.idea
+
 /dist
 /temp
 
