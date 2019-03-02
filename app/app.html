@@ -2,7 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Electron Boilerplate</title>
+  <title>Satyrn</title>
+  <style type="text/css" media="screen">
+    body {
+        overflow: hidden;
+    }
+
+    #editor {
+      margin: 0;
+    }
+
+  </style>
 </head>
 <body>
 
@@ -22,6 +32,25 @@
     </p>
   </div>
 
-  <script src="app.js"></script>
+  <div>
+
+    <pre id="editor">function foo(items) {
+        var i;
+        for (i = 0; i &lt; items.length; i++) {
+            alert("Ace Rocks " + items[i]);
+        }
+    }</pre>
+  </div>
+
+<script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="app.js"></script>
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.session.setMode("ace/mode/javascript");
+</script>
+
+
 </body>
 </html>
