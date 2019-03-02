@@ -56,9 +56,11 @@
 
 <script>
   const showdown  = require('showdown');
+  const aceEditor = require('../src/extensions/ace-editor');
 
   const editor = ace.edit("editor");
-  const converter = new showdown.Converter();
+  const converter = new showdown.Converter({extensions: aceEditor});
+
 
   function init() {
     editor.setTheme("ace/theme/twilight");
