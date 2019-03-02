@@ -10,10 +10,12 @@ import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import { fileMenuTemplate } from "./menu/file_menu_template";
 import createWindow from "./helpers/window";
-
+import reload from 'electron-reload';
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
 import env from "env";
+
+reload(__dirname);
 
 const setApplicationMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
