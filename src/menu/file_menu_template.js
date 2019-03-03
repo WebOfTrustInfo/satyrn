@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, dialog, BrowserWindow } from "electron";
 var path = require('path');
 
 export const fileMenuTemplate = {
@@ -8,7 +8,7 @@ export const fileMenuTemplate = {
       label: "Open",
       accelerator: "CmdOrCtrl+O",
       click: () => {
-        console.log("app",app.mainWindow)
+        console.log(dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }))
         var defaultFilename = path.join(app.getAppPath(),'default.md');
         app.mainWindow.send('open-file',defaultFilename);
 
