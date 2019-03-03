@@ -1,4 +1,4 @@
-export const aceEditor = {
+const aceEditor = {
   type: 'lang',
   regex: /```javascript/,
   replace: function() {
@@ -10,4 +10,3 @@ export const aceEditor = {
       '  </div>')
   }
 };
-

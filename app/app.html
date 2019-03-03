@@ -8,7 +8,7 @@
         overflow: hidden;
     }
 
-    #editor {
+    .editor {
       margin: 0;
       width:100%;
       height:250px;
@@ -37,25 +37,61 @@
 
   <div id="showdown-js-editor">
     <script>
-      var editor = null;
-    </script>
-    <input type="button" onclick="run(editor,'outputDiv')" value="Run" />
-    <input type="button" onclick="window.alert('a')" value="Refresh" />
+      var satyrnicon = {
+        editors:{},
+        state:{}
+      };
 
-    <pre id="editor">function foo(items) {
+      function addEditor(key) {
+        var editor = ace.edit(key);
+        editor.setTheme("ace/theme/twilight");
+        editor.session.setMode("ace/mode/javascript");
+        satyrnicon.editors[key]=editor
+      }
+      function getEditor(key) {
+        console.log(satyrnicon)
+        return satyrnicon.editors[key]
+      }
+
+
+      function run(key) {
+        const editor = getEditor(key)
+        console.oldLog = console.log;
+        console.log = function(value)
+        {
+            console.oldLog(value);
+            return value;
+        };
+
+        const code =editor.getValue()
+        const output = eval(code)
+        document.querySelector("#"+key+'outputDiv').innerHTML = output
+        console.log = console.oldLog
+      }
+
+      window.run = run
+
+    </script>
+
+
+    <input type="button" onclick="run(key)" value="Run" />
+    <input type="button" onclick="reset(key)" value="Refresh" />
+
+    <pre id="someKeyForASpecificEditor" class="editor">function foo(items) {
         var i;
         for (i = 0; i &lt; items.length; i++) {
             alert("Ace Rocks " + items[i]);
         }
     }
-    foo(["A","B"])
+    foo(["A"])
     console.log("OUTPUT");
     </pre>
-    <script>
-      var editor = ace.edit("editor");
-    </script>
-    <pre id="outputDiv">
+    <pre id="someKeyForASpecificEditoroutputDiv">
     </pre>
+    <script>
+    var key = "someKeyForASpecificEditor";
+    addEditor(key)
+    </script>
   </div>
   <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()"># hello, markdown!</textarea>
   <div id="markdown">
@@ -70,14 +106,10 @@
   const showdown  = require('showdown');
   const aceEditor = require('../src/extensions/ace-editor');
 
-  const editor = ace.edit("editor");
   const converter = new showdown.Converter({extensions: aceEditor});
 
 
   function init() {
-    editor.setTheme("ace/theme/twilight");
-    editor.session.setMode("ace/mode/javascript");
-
     const text = document.getElementById("textarea").value;
     const html  = converter.makeHtml(text);
     document.querySelector("#markdown").innerHTML = html;
