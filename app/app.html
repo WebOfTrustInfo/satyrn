@@ -24,9 +24,12 @@
     };
 
     function addEditor(key) {
+      console.log("ADDING Editor: " + key);
+      // let key = editorIdPrefix+key;
       var editor = ace.edit(key);
       editor.setTheme("ace/theme/twilight");
       editor.session.setMode("ace/mode/javascript");
+      console.log(satyrnicon.editors)
       satyrnicon.editors[key]=editor
       satyrnicon.state[key]=editor.getValue()
     }
@@ -64,51 +67,34 @@
 
   <div id="app" class="container">
     <h1 id="file">FILE NAME GOES HERE</h1>
-
-  <div id="showdown-js-editor">
-    <input type="button" onclick="run(key)" value="Run" />
-    <input type="button" onclick="reset(key)" value="Refresh" />
-
-    <pre id="someKeyForASpecificEditor" class="editor">function foo(items) {
-        var i;
-        for (i = 0; i &lt; items.length; i++) {
-            alert("Ace Rocks " + items[i]);
-        }
-    }
-    foo(["A"])
-    console.log("OUTPUT");
-    </pre>
-    <pre id="someKeyForASpecificEditoroutputDiv">
-    </pre>
-    <script>
-    var key = "someKeyForASpecificEditor";
-    addEditor(key)
-    </script>
-  </div>
-  <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()"># hello, markdown!</textarea>
+  <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()">```javascript console.log("TEST") ```</textarea>
   <div id="markdown">
 
-  </div>
-</div>
+  <!--</div>-->
+<!--</div>-->
 
 <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="app.js"></script>
 
 <script>
   const showdown  = require('showdown');
-
-  showdown.extension('aceEditor', () => {
-    let content = [];
-    const editorHtml = "<div id=\"showdown-js-editor\">\n" +
-      "    <input type=\"button\" onclick=\"run(key)\" value=\"Run\" />\n" +
-      "    <input type=\"button\" onclick=\"reset(key)\" value=\"Refresh\" />\n" +
+  const editorIdPrefix = "editor";
+  function getEditorHtml(content, key) {
+    console.log(key);
+    return "<div id=\"showdown-js-editor\">\n" +
+      "    <input type=\"button\" onclick=\"run("+ editorIdPrefix+key+")\" value=\"Run\" />\n" +
+      "    <input type=\"button\" onclick=\"reset("+editorIdPrefix+key+")\" value=\"Refresh\" />\n" +
       "\n" +
-      "    <pre id=\"someKeyForASpecificEditor\" class=\"editor\">console.log('will') " +
+      "    <pre id=\""+editorIdPrefix+key+"\" class=\"editor\">" + content +
       "    </pre>\n" +
       "    <pre id=\"someKeyForASpecificEditoroutputDiv\">\n" +
       "    </pre>\n" +
-
       "  </div>";
+  }
+
+  showdown.extension('aceEditor', () => {
+    let content = [];
+
     return [
       {
         type: 'lang',
@@ -124,7 +110,8 @@
         filter: function (text) {
           for (var i=0; i< content.length; ++i) {
             var pat = '<p>%EDITOR' + i + '% *<\/p>';
-            text = text.replace(new RegExp(pat, 'gi'), editorHtml);
+            text = text.replace(new RegExp(pat, 'gi'), getEditorHtml(content[i], i));
+            addEditor(i);
           }
           //reset array
           content = [];
