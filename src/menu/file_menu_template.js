@@ -8,9 +8,9 @@ export const fileMenuTemplate = {
       label: "Open",
       accelerator: "CmdOrCtrl+O",
       click: () => {
-        console.log(dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }))
-        var defaultFilename = path.join(app.getAppPath(),'default.md');
-        app.mainWindow.send('open-file',defaultFilename);
+        //var defaultFilename = path.join(app.getAppPath(),'default.md');
+        var fileName = dialog.showOpenDialog({ defaultPath:app.getAppPath(), properties: ['openFile', 'openDirectory'] });
+        app.mainWindow.send('open-file',fileName);
 
       }
     },
