@@ -11,6 +11,10 @@ Will Abramson will.abramson@napier.ac.uk
 
 Ganesh Annan gannan@digitalbazaar.com 
 
+```javascript
+console.log("Hey!")
+```
+
 ## Requirements
 * File format is markdown
 * In the app, the markdown is unmodifiable, but rendered

@@ -11,7 +11,14 @@ function addEditor(key) {
   editor.session.setMode("ace/mode/javascript");
   satyrnicon.editors[key]=editor
   satyrnicon.state[key]=editor.getValue()
+};
+function initialiseEditors() {
+  for (let key in satyrnicon.editors) {
+    console.log("Initializing Editors",key)
+    addEditor(key);
+  }
 }
+
 function getEditor(key) {
   return satyrnicon.editors[key]
 }
@@ -95,10 +102,8 @@ function handleTextChange() {
   initialiseEditors();
 }
 
-function initialiseEditors() {
-  for (let key in satyrnicon.editors) {
-    addEditor(key);
-  }
+module.exports = {
+  initialiseEditors:initialiseEditors
 }
 
 init();

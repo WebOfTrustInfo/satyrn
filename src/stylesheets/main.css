@@ -6,7 +6,7 @@ body {
   padding: 0;
 }
 
-body {
+xbody {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +20,7 @@ a {
 }
 
 .container {
-  text-align: center;
+  margin: 2%;
 }
 
 .showdown-js-editor {

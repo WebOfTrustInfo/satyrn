@@ -15,6 +15,7 @@ import jetpack from "fs-jetpack";
 import showdown  from 'showdown';
 import { greet } from "./hello_world/hello_world";
 import env from "env";
+import { initialiseEditors } from './extensions/ace-editor';
 
 window.showdown = showdown;
 
@@ -34,12 +35,13 @@ const osMap = {
 const ipc = require('electron').ipcRenderer
 
 ipc.on('open-file', function (event, arg) {
-  fs.readFile( arg, function (err, data) {
+  fs.readFile( arg[0], function (err, data) {
     if (err) {
       throw err;
     }
     const text = data.toString();
     const html  = converter.makeHtml(text);
     document.querySelector("#markdown").innerHTML = html;
+    initialiseEditors()
   });
 })
