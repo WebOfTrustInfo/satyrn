@@ -1,31 +1,30 @@
 const showdown  = require('showdown');
 
-let satyrnicon = {
-  editors:{},
-  state:{}
-};
+window.satyrnicon = null;
 
 function addEditor(key) {
   let editor = ace.edit(key);
   editor.setTheme("ace/theme/twilight");
   editor.session.setMode("ace/mode/javascript");
-  satyrnicon.editors[key]=editor
-  satyrnicon.state[key]=editor.getValue()
+  window.satyrnicon.editors[key]=editor
+  window.satyrnicon.state[key]=editor.getValue()
 };
 function initialiseEditors() {
-  for (let key in satyrnicon.editors) {
+  for (let key in window.satyrnicon.editors) {
     console.log("Initializing Editors",key)
     addEditor(key);
   }
+  console.log("Initialized",window.satyrnicon.editors)
 }
 
 function getEditor(key) {
-  return satyrnicon.editors[key]
+  console.log("GET EDITOR",key,window.satyrnicon.editors)
+  return window.satyrnicon.editors[key]
 }
 
 function reset(key) {
   let editor = getEditor(key)
-  editor.setValue(satyrnicon.state[key])
+  editor.setValue(window.satyrnicon.state[key])
 }
 
 function run(key) {
@@ -75,11 +74,11 @@ showdown.extension('aceEditor', () => {
           let key = "editor-"+i;
           var pat = '<p>%EDITOR' + i + '% *<\/p>';
           text = text.replace(new RegExp(pat, 'gi'), getEditorHtml(content[i], key));
-          satyrnicon.editors[key] = null;
+          window.satyrnicon.editors[key] = null;
         }
         //reset array
         content = [];
-        console.log(satyrnicon.editors);
+        console.log(window.satyrnicon.editors);
         return text;
       }
     }
@@ -87,23 +86,29 @@ showdown.extension('aceEditor', () => {
 });
 const converter = new showdown.Converter({extensions: ['aceEditor']});
 
-function init() {
-  const text = document.getElementById("textarea").value;
+function renderDocument(text) {
+  window.satyrnicon = {
+    editors:{},
+    state:{}
+  };
   const html  = converter.makeHtml(text);
   document.querySelector("#markdown").innerHTML = html;
+  console.log("SAT:",window.satyrnicon);
   initialiseEditors();
+}
+function init() {
+  const text = document.getElementById("textarea").value;
+  renderDocument(text);
 }
 
 function handleTextChange() {
   const text = document.getElementById("textarea").value;
-  const html  = converter.makeHtml(text);
-
-  document.querySelector("#markdown").innerHTML = html;
-  initialiseEditors();
+  renderDocument(text)
 }
 
 module.exports = {
-  initialiseEditors:initialiseEditors
+  initialiseEditors:initialiseEditors,
+  renderDocument:renderDocument
 }
 
-init();
+//init();

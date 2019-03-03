@@ -15,7 +15,7 @@ import jetpack from "fs-jetpack";
 import showdown  from 'showdown';
 import { greet } from "./hello_world/hello_world";
 import env from "env";
-import { initialiseEditors } from './extensions/ace-editor';
+import { renderDocument } from './extensions/ace-editor';
 
 window.showdown = showdown;
 
@@ -40,8 +40,9 @@ ipc.on('open-file', function (event, arg) {
       throw err;
     }
     const text = data.toString();
-    const html  = converter.makeHtml(text);
-    document.querySelector("#markdown").innerHTML = html;
-    initialiseEditors()
+    renderDocument(text)
+    //const html  = converter.makeHtml(text);
+    //document.querySelector("#markdown").innerHTML = html;
+    //initialiseEditors()
   });
 })

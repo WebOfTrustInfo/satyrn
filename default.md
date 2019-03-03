@@ -12,7 +12,15 @@ Will Abramson will.abramson@napier.ac.uk
 Ganesh Annan gannan@digitalbazaar.com 
 
 ```javascript
-console.log("Hey!")
+console.log("Hey! 1")
+```
+
+```javascript
+console.log("Hey! 2")
+```
+
+```javascript
+console.log("Hey! 3")
 ```
 
 ## Requirements
