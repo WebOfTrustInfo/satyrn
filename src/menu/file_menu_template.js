@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from "electron";
+var path = require('path');
 
 export const fileMenuTemplate = {
   label: "File",
@@ -8,7 +9,8 @@ export const fileMenuTemplate = {
       accelerator: "CmdOrCtrl+O",
       click: () => {
         console.log("app",app.mainWindow)
-        app.mainWindow.send('open-file',"THE PATH");
+        var defaultFilename = path.join(app.getAppPath(),'default.md');
+        app.mainWindow.send('open-file',defaultFilename);
 
       }
     },
@@ -21,3 +23,5 @@ export const fileMenuTemplate = {
     }
   ]
 };
+
+//function fileOpenDialog()
