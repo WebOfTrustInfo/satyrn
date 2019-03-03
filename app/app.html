@@ -5,7 +5,7 @@
   <title>Satyrn</title>
   <style type="text/css" media="screen">
     body {
-        overflow: hidden;
+        overflow: scroll;
     }
 
     .editor {
@@ -52,7 +52,7 @@
           return value;
       };
 
-      const code =editor.getValue()
+      const code = editor.getValue()
       const output = eval(code)
       document.querySelector("#"+key+"-outputDiv").innerHTML = output
       console.log = console.oldLog
@@ -64,8 +64,7 @@
 
 </head>
 <body>
-
-  <div id="app" class="container">
+  <div id="app" class="container" style="overflow: scroll;">
     <h1 id="file">FILE NAME GOES HERE</h1>
   <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()">```javascript console.log("TEST") ```</textarea>
   <div id="markdown">
@@ -77,7 +76,6 @@
 <script src="app.js"></script>
 
 <script>
-  const showdown  = require('showdown');
   const editorIdPrefix = "editor";
   function getEditorHtml(content, key) {
     console.log(key);
@@ -136,7 +134,5 @@
 
   init();
 </script>
-
-
 </body>
 </html>

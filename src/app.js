@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import "./stylesheets/main.css";
 
 // Small helpers you might want to keep
@@ -10,8 +12,11 @@ import "./helpers/external_links.js";
 
 import { remote } from "electron";
 import jetpack from "fs-jetpack";
+import showdown  from 'showdown';
 import { greet } from "./hello_world/hello_world";
 import env from "env";
+
+window.showdown = showdown;
 
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
@@ -29,5 +34,12 @@ const osMap = {
 const ipc = require('electron').ipcRenderer
 
 ipc.on('open-file', function (event, arg) {
-  document.querySelector("#file").innerHTML = arg;
+  fs.readFile( arg, function (err, data) {
+    if (err) {
+      throw err;
+    }
+    const text = data.toString();
+    const html  = converter.makeHtml(text);
+    document.querySelector("#markdown").innerHTML = html;
+  });
 })
