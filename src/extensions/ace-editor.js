@@ -1,12 +1,16 @@
-const aceEditor = {
-  type: 'lang',
-  regex: /```javascript/,
-  replace: function() {
-    return (  '<div id="showdown-js-editor">\n' +
-      '    <input type="button" onclick="window.alert()" value="Run" />\n' +
-      '    <input type="button" onclick="window.alert()" value="Refresh" />\n' +
-      '\n' +
-      '    <pre id="editor"></pre>\n' +
-      '  </div>')
-  }
+const aceEditor = function() {
+  let matches = [];
+  const aceMarkdown = {
+      type: 'lang',
+      regex: /```javascript([^]+?)```/gi,
+      replace: function(s, match) {
+        matches.push(match);
+        console.log(match);
+        var n = matches.length - 1;
+        return '%PLACEHOLDER' + n + '%';
+      }
+    };
+  return [aceMarkdown]
 };
+
+
