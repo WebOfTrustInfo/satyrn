@@ -17,6 +17,48 @@
 
   </style>
   <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script>
+    var satyrnicon = {
+      editors:{},
+      state:{}
+    };
+
+    function addEditor(key) {
+      var editor = ace.edit(key);
+      editor.setTheme("ace/theme/twilight");
+      editor.session.setMode("ace/mode/javascript");
+      satyrnicon.editors[key]=editor
+      satyrnicon.state[key]=editor.getValue()
+    }
+    function getEditor(key) {
+      console.log(satyrnicon)
+      return satyrnicon.editors[key]
+    }
+
+    function reset(key) {
+      const editor = getEditor(key)
+      editor.setValue(satyrnicon.state[key])
+    }
+
+    function run(key) {
+      const editor = getEditor(key)
+      console.oldLog = console.log;
+      console.log = function(value)
+      {
+          console.oldLog(value);
+          return value;
+      };
+
+      const code =editor.getValue()
+      const output = eval(code)
+      document.querySelector("#"+key+'outputDiv').innerHTML = output
+      console.log = console.oldLog
+    }
+
+    window.run = run
+
+  </script>
+
 </head>
 <body>
 
@@ -36,44 +78,6 @@
     </p>
 
   <div id="showdown-js-editor">
-    <script>
-      var satyrnicon = {
-        editors:{},
-        state:{}
-      };
-
-      function addEditor(key) {
-        var editor = ace.edit(key);
-        editor.setTheme("ace/theme/twilight");
-        editor.session.setMode("ace/mode/javascript");
-        satyrnicon.editors[key]=editor
-      }
-      function getEditor(key) {
-        console.log(satyrnicon)
-        return satyrnicon.editors[key]
-      }
-
-
-      function run(key) {
-        const editor = getEditor(key)
-        console.oldLog = console.log;
-        console.log = function(value)
-        {
-            console.oldLog(value);
-            return value;
-        };
-
-        const code =editor.getValue()
-        const output = eval(code)
-        document.querySelector("#"+key+'outputDiv').innerHTML = output
-        console.log = console.oldLog
-      }
-
-      window.run = run
-
-    </script>
-
-
     <input type="button" onclick="run(key)" value="Run" />
     <input type="button" onclick="reset(key)" value="Refresh" />
 
