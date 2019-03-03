@@ -46,3 +46,8 @@ ipc.on('open-file', function (event, arg) {
     //initialiseEditors()
   });
 })
+
+function loadFile() {
+  ipc.send('load-file')
+}
+window.loadFile = loadFile

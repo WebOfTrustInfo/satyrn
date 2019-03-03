@@ -94,6 +94,7 @@ function renderDocument(text) {
   const html  = converter.makeHtml(text);
   document.querySelector("#markdown").innerHTML = html;
   console.log("SAT:",window.satyrnicon);
+  document.querySelector("#textarea").innerHTML = text;
   initialiseEditors();
 }
 function init() {
