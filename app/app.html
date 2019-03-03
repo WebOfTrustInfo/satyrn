@@ -54,7 +54,7 @@
 
       const code =editor.getValue()
       const output = eval(code)
-      document.querySelector("#"+key+'outputDiv').innerHTML = output
+      document.querySelector("#"+key+"-outputDiv").innerHTML = output
       console.log = console.oldLog
     }
 
@@ -81,13 +81,13 @@
   const editorIdPrefix = "editor";
   function getEditorHtml(content, key) {
     console.log(key);
-    return "<div id=\"showdown-js-editor\">\n" +
-      "    <input type=\"button\" onclick=\"run("+ editorIdPrefix+key+")\" value=\"Run\" />\n" +
-      "    <input type=\"button\" onclick=\"reset("+editorIdPrefix+key+")\" value=\"Refresh\" />\n" +
+    return "<div id=\"showdown-js-editor\"+key>\n" +
+      "    <input type=\"button\" onclick=\"run("+key+")\" value=\"Run\" />\n" +
+      "    <input type=\"button\" onclick=\"reset("+key+")\" value=\"Refresh\" />\n" +
       "\n" +
-      "    <pre id=\""+editorIdPrefix+key+"\" class=\"editor\">" + content +
+      "    <pre id=\""+key+"\" class=\"editor\">" + content +
       "    </pre>\n" +
-      "    <pre id=\"someKeyForASpecificEditoroutputDiv\">\n" +
+      "    <pre id=\""+key+"-outputDiv\">\n" +
       "    </pre>\n" +
       "  </div>";
   }
