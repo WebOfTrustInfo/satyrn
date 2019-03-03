@@ -5,7 +5,7 @@
   <title>Satyrn</title>
   <style type="text/css" media="screen">
     body {
-        overflow: hidden;
+        overflow: scroll;
     }
 
     .editor {
@@ -52,7 +52,7 @@
           return value;
       };
 
-      const code =editor.getValue()
+      const code = editor.getValue()
       const output = eval(code)
       document.querySelector("#output-"+key).innerHTML = output
       console.log = console.oldLog
@@ -126,7 +126,6 @@
   function init() {
     const text = document.getElementById("textarea").value;
     const html  = converter.makeHtml(text);
-
     document.querySelector("#markdown").innerHTML = html;
     initialiseEditors();
   }
@@ -147,7 +146,5 @@
 
   init();
 </script>
-
-
 </body>
 </html>
