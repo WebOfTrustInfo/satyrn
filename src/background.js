@@ -40,6 +40,7 @@ app.on("ready", () => {
     width: 1000,
     height: 600
   });
+  app.mainWindow = mainWindow
 
   mainWindow.loadURL(
     url.format({
