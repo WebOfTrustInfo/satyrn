@@ -5,7 +5,8 @@
   <title>Satyrn</title>
   <style type="text/css" media="screen">
     body {
-        overflow: scroll;
+        overflow-y: scroll;
+      overflow-x: hidden;
     }
 
     .editor {
@@ -26,11 +27,16 @@
 
 </head>
 <body>
+<div>
+  <h1 id="file">FILE NAME GOES HERE</h1>
 
   <div id="app" class="container">
-    <h1 id="file">FILE NAME GOES HERE</h1>
-  <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()">```javascript console.log("TEST") ```</textarea>
-  <div id="markdown">
+    <div id="teacher-input">
+      <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()">```javascript console.log("TEST") ```</textarea>
+    </div>
+    <div id="markdown">
+</div>
+
 
   <!--</div>-->
 <!--</div>-->

@@ -7,9 +7,8 @@ body {
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 20px;
+  text-align: center;
   font-family: sans-serif;
   color: #525252;
 }
@@ -21,12 +20,29 @@ a {
 
 .container {
   text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+#textarea {
+  height: 100%;
+  flex: 2;
+  padding: 10px
+}
+
+#markdown {
+  flex: 1;
+  /*padding: 10px;*/
+  margin: 50px;
 }
 
 .showdown-js-editor {
 
   border: 1px solid #232323;
   background: #232323;
+  color: white;
 }
 
 .showdown-js-editor input {
