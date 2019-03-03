@@ -18,45 +18,7 @@
   </style>
   <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
   <script>
-    var satyrnicon = {
-      editors:{},
-      state:{}
-    };
 
-    function addEditor(key) {
-      console.log("ADDING Editor: " + key);
-      let editor = ace.edit(key);
-      editor.setTheme("ace/theme/twilight");
-      editor.session.setMode("ace/mode/javascript");
-      console.log(satyrnicon.editors)
-      satyrnicon.editors[key]=editor
-      satyrnicon.state[key]=editor.getValue()
-    }
-    function getEditor(key) {
-      console.log(satyrnicon)
-      return satyrnicon.editors[key]
-    }
-
-    function reset(key) {
-      let editor = getEditor(key)
-      editor.setValue(satyrnicon.state[key])
-    }
-
-    function run(key) {
-      console.log("RUN " + key)
-      let editor = getEditor(key);
-      console.oldLog = console.log;
-      console.log = function(value)
-      {
-          console.oldLog(value);
-          return value;
-      };
-
-      const code = editor.getValue()
-      const output = eval(code)
-      document.querySelector("#output-"+key).innerHTML = output
-      console.log = console.oldLog
-    }
 
     window.run = run
 

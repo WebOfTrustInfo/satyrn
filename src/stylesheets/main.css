@@ -23,12 +23,12 @@ a {
   text-align: center;
 }
 
-#showdown-js-editor {
+.showdown-js-editor {
 
   border: 1px solid #232323;
   background: #232323;
 }
 
-#showdown-js-editor input {
+.showdown-js-editor input {
   float: right;
 }
