@@ -8,7 +8,7 @@ export const fileMenuTemplate = {
       accelerator: "CmdOrCtrl+O",
       click: () => {
         console.log("app",app.mainWindow)
-        app.mainWindow.send('open-file',"THE PATH");
+        app.mainWindow.send('open-file',"default.md");
 
       }
     },
