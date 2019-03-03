@@ -25,8 +25,7 @@
 
     function addEditor(key) {
       console.log("ADDING Editor: " + key);
-      // let key = editorIdPrefix+key;
-      var editor = ace.edit(key);
+      let editor = ace.edit(key);
       editor.setTheme("ace/theme/twilight");
       editor.session.setMode("ace/mode/javascript");
       console.log(satyrnicon.editors)
@@ -39,12 +38,13 @@
     }
 
     function reset(key) {
-      const editor = getEditor(key)
+      let editor = getEditor(key)
       editor.setValue(satyrnicon.state[key])
     }
 
     function run(key) {
-      const editor = getEditor(key)
+      console.log("RUN " + key)
+      let editor = getEditor(key);
       console.oldLog = console.log;
       console.log = function(value)
       {
@@ -54,7 +54,7 @@
 
       const code =editor.getValue()
       const output = eval(code)
-      document.querySelector("#"+key+"-outputDiv").innerHTML = output
+      document.querySelector("#output-"+key).innerHTML = output
       console.log = console.oldLog
     }
 
@@ -78,16 +78,15 @@
 
 <script>
   const showdown  = require('showdown');
-  const editorIdPrefix = "editor";
   function getEditorHtml(content, key) {
     console.log(key);
-    return "<div id=\"showdown-js-editor\"+key>\n" +
+    return "<div id=\"showdown-js-editor\">\n" +
       "    <input type=\"button\" onclick=\"run("+key+")\" value=\"Run\" />\n" +
       "    <input type=\"button\" onclick=\"reset("+key+")\" value=\"Refresh\" />\n" +
       "\n" +
       "    <pre id=\""+key+"\" class=\"editor\">" + content +
       "    </pre>\n" +
-      "    <pre id=\""+key+"-outputDiv\">\n" +
+      "    <pre id=\"output-"+key+"\">\n" +
       "    </pre>\n" +
       "  </div>";
   }
@@ -109,12 +108,14 @@
         type: 'output',
         filter: function (text) {
           for (var i=0; i< content.length; ++i) {
+            let key = "editor-"+i;
             var pat = '<p>%EDITOR' + i + '% *<\/p>';
-            text = text.replace(new RegExp(pat, 'gi'), getEditorHtml(content[i], i));
-            addEditor(i);
+            text = text.replace(new RegExp(pat, 'gi'), getEditorHtml(content[i], key));
+            satyrnicon.editors[key] = null;
           }
           //reset array
           content = [];
+          console.log(satyrnicon.editors);
           return text;
         }
       }
@@ -125,13 +126,23 @@
   function init() {
     const text = document.getElementById("textarea").value;
     const html  = converter.makeHtml(text);
+
     document.querySelector("#markdown").innerHTML = html;
+    initialiseEditors();
   }
 
   function handleTextChange() {
     const text = document.getElementById("textarea").value;
     const html  = converter.makeHtml(text);
+
     document.querySelector("#markdown").innerHTML = html;
+    initialiseEditors();
+  }
+
+  function initialiseEditors() {
+    for (let key in satyrnicon.editors) {
+      addEditor(key);
+    }
   }
 
   init();
