@@ -8,6 +8,7 @@ import url from "url";
 import { app, Menu } from "electron";
 import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
+import { fileMenuTemplate } from "./menu/file_menu_template";
 import createWindow from "./helpers/window";
 import reload from 'electron-reload';
 // Special module holding environment variables which you declared
@@ -17,7 +18,7 @@ import env from "env";
 reload(__dirname);
 
 const setApplicationMenu = () => {
-  const menus = [editMenuTemplate];
+  const menus = [fileMenuTemplate, editMenuTemplate];
   if (env.name !== "production") {
     menus.push(devMenuTemplate);
   }
@@ -39,6 +40,7 @@ app.on("ready", () => {
     width: 1000,
     height: 600
   });
+  app.mainWindow = mainWindow
 
   mainWindow.loadURL(
     url.format({

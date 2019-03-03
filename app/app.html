@@ -63,6 +63,7 @@
 <body>
 
   <div id="app" class="container">
+    <h1 id="file">FILE NAME GOES HERE</h1>
 
   <div id="showdown-js-editor">
     <input type="button" onclick="run(key)" value="Run" />
@@ -95,17 +96,7 @@
 
 <script>
   const showdown  = require('showdown');
-  // const aceEditor = function() {
-  //   let matches = [];
-  //
-  //   return [aceMarkdown]
-  // };
 
-  // const aceEditor = {
-  //   type: 'lang',
-  //   regex: /```javascript([^]+?)```/g,
-  //   replace: 'editor'
-  // };
   showdown.extension('aceEditor', () => {
     let content = [];
     const editorHtml = "<div id=\"showdown-js-editor\">\n" +
