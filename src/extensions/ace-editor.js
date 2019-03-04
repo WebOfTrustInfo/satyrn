@@ -28,17 +28,25 @@ function reset(key) {
 }
 
 function run(key) {
+  document.querySelector("#output-"+key).innerHTML = "....";
+
   let editor = getEditor(key);
   console.oldLog = console.log;
+  let output = '';
   console.log = function(value)
   {
     console.oldLog(value);
+    output+=value;
+    output += '\n';
     return value;
   };
 
   const code = editor.getValue()
-  const output = eval(code)
+
+  eval(code)
   document.querySelector("#output-"+key).innerHTML = output
+  console.log("OUTPUT : " + output)
+
   console.log = console.oldLog
 }
 
@@ -49,7 +57,7 @@ function getEditorHtml(content, key) {
     "\n" +
     "    <pre id=\""+key+"\" class=\"editor\">" + content +
     "    </pre>\n" +
-    "    <pre id=\"output-"+key+"\">\n" +
+    "    <pre class='editor-output' id=\"output-"+key+"\">\n" +
     "    </pre>\n" +
     "  </div>";
 }
