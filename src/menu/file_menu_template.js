@@ -1,4 +1,4 @@
-import { app, dialog, BrowserWindow } from "electron";
+import { app, BrowserWindow, dialog } from "electron";
 var path = require('path');
 
 export const fileMenuTemplate = {
@@ -7,12 +7,7 @@ export const fileMenuTemplate = {
     {
       label: "Open",
       accelerator: "CmdOrCtrl+O",
-      click: () => {
-        //var defaultFilename = path.join(app.getAppPath(),'default.md');
-        var fileName = dialog.showOpenDialog({ defaultPath:app.getAppPath(), properties: ['openFile', 'openDirectory'] });
-        app.mainWindow.send('open-file',fileName);
-
-      }
+      click: fileOpenDialog
     },
     {
       label: "Quit",
@@ -24,4 +19,25 @@ export const fileMenuTemplate = {
   ]
 };
 
-//function fileOpenDialog()
+function fileOpenDialog() {
+    var fileNames;
+    const options = {
+        title: 'Open a markdown file',
+        buttonLabel: 'Open',
+        filters: [
+          { name: 'markdown', extensions: ['md'] }
+        ]
+    };
+ 
+    dialog.showOpenDialog(null, options, (fileNames) => {
+
+        // fileNames is an array that contains all the selected
+        if(fileNames === undefined){
+            console.log("No file selected");
+            return;
+        }
+
+        console.log(fileNames);
+        app.mainWindow.send('open-file',fileNames[0]);
+    })
+}
