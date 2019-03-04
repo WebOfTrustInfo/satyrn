@@ -41,9 +41,6 @@ ipc.on('open-file', function (event, arg) {
     }
     const text = data.toString();
     renderDocument(text)
-    //const html  = converter.makeHtml(text);
-    //document.querySelector("#markdown").innerHTML = html;
-    //initialiseEditors()
   });
 })
 
@@ -51,3 +48,7 @@ function loadFile() {
   ipc.send('load-file')
 }
 window.loadFile = loadFile
+
+console.log(__dirname + "/default.md")
+app.mainWindow.send('open-file',["./default.md"]);
+

@@ -63,5 +63,6 @@ const ipc = require('electron').ipcMain
 
 ipc.on('load-file', function (event, arg) {
   var fileName = dialog.showOpenDialog({ defaultPath:app.getAppPath(), properties: ['openFile', 'openDirectory'] });
+  console.log("OPEN" + fileName)
   app.mainWindow.send('open-file',fileName);
 })

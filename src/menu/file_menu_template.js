@@ -20,6 +20,7 @@ export const fileMenuTemplate = {
 };
 
 function fileOpenDialog() {
+  console.log("OPEN FILE DIALOG")
     var fileNames;
     const options = {
         title: 'Open a markdown file',
@@ -37,7 +38,7 @@ function fileOpenDialog() {
             return;
         }
 
-        console.log(fileNames);
+        console.log("OPEN:" + fileNames);
         app.mainWindow.send('open-file',fileNames);
     })
 }

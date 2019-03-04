@@ -11,7 +11,6 @@ function addEditor(key) {
 };
 function initialiseEditors() {
   for (let key in window.satyrnicon.editors) {
-    console.log("Initializing Editors",key)
     addEditor(key);
   }
   console.log("Initialized",window.satyrnicon.editors)
@@ -86,7 +85,6 @@ showdown.extension('aceEditor', () => {
         }
         //reset array
         content = [];
-        console.log(window.satyrnicon.editors);
         return text;
       }
     }
@@ -101,7 +99,6 @@ function renderDocument(text) {
   };
   const html  = converter.makeHtml(text);
   document.querySelector("#markdown").innerHTML = html;
-  console.log("SAT:",window.satyrnicon);
   document.querySelector("#textarea").innerHTML = text;
   initialiseEditors();
 }
