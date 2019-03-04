@@ -5,23 +5,21 @@ import "./stylesheets/main.css";
 // Small helpers you might want to keep
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
+import "./extensions/ace-editor";
+
+import state from './state/satyrnicon'
 
 // ----------------------------------------------------------------------------
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
 
 import { remote } from "electron";
-import jetpack from "fs-jetpack";
 import showdown  from 'showdown';
-import env from "env";
-import { renderDocument } from './extensions/ace-editor';
 
 window.showdown = showdown;
+window.state = state;
 
 const app = remote.app;
-const appDir = jetpack.cwd(app.getAppPath());
-
-const manifest = appDir.read("package.json", "json");
 
 const osMap = {
   win32: "Windows",
@@ -44,8 +42,29 @@ ipc.on('open-file', function (event, arg) {
 function loadFile() {
   ipc.send('load-file')
 }
+const converter = new showdown.Converter({extensions: ['aceEditor']});
+
+
+function init() {
+  const text = document.getElementById("textarea").value;
+  renderDocument(text);
+}
+
+function handleTextChange() {
+  const text = document.getElementById("textarea").value;
+  renderDocument(text)
+}
+
+function renderDocument(text) {
+
+  const html  = converter.makeHtml(text);
+  document.querySelector("#markdown").innerHTML = html;
+  document.querySelector("#teacher").innerHTML = text;
+  document.querySelector("#teacher").style.display = "block";
+  state.initialiseEditors();
+}
+
 window.loadFile = loadFile
 
-console.log(__dirname + "/default.md")
 app.mainWindow.send('open-file',["./default.md"]);
 
