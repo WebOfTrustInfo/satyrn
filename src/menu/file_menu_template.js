@@ -38,6 +38,6 @@ function fileOpenDialog() {
         }
 
         console.log(fileNames);
-        app.mainWindow.send('open-file',fileNames[0]);
+        app.mainWindow.send('open-file',fileNames);
     })
 }
