@@ -51,7 +51,7 @@ function init() {
 }
 
 function handleTextChange() {
-  const text = document.getElementById("textarea").value;
+  const text = document.getElementById("teacher").value;
   renderDocument(text)
 }
 
@@ -64,6 +64,7 @@ function renderDocument(text) {
   state.initialiseEditors();
 }
 
+window.handleTextChange = handleTextChange;
 window.loadFile = loadFile
 
 app.mainWindow.send('open-file',["./default.md"]);
