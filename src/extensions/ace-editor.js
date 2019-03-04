@@ -99,7 +99,8 @@ function renderDocument(text) {
   };
   const html  = converter.makeHtml(text);
   document.querySelector("#markdown").innerHTML = html;
-  document.querySelector("#textarea").innerHTML = text;
+  document.querySelector("#teacher").innerHTML = text;
+  document.querySelector("#teacher").style.display = "block";
   initialiseEditors();
 }
 function init() {

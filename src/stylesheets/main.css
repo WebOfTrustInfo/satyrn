@@ -10,6 +10,8 @@ body {
   padding: 20px;
   font-family: sans-serif;
   color: #525252;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 a {
@@ -25,7 +27,8 @@ a {
   flex-direction: row;
 }
 
-#textarea {
+#teacher {
+  display: none;
   height: 100%;
   flex: 2;
   padding: 10px
@@ -35,6 +38,14 @@ a {
   flex: 1;
   /*padding: 10px;*/
   margin: 50px;
+}
+
+
+.editor {
+  margin: 0;
+  width:100%;
+  height:250px;
+
 }
 
 .showdown-js-editor {

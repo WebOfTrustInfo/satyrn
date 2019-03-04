@@ -3,30 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>Satyrn</title>
-  <style type="text/css" media="screen">
-    body {
-        overflow-y: scroll;
-      overflow-x: hidden;
-    }
-
-    .editor {
-      margin: 0;
-      width:100%;
-      height:250px;
-
-    }
-
-  </style>
   <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
 <div>
-  <input type="button" value="Load" onClick="loadFile()" />
 
   <div id="app" class="container">
     <div id="teacher-input">
-      <textarea id="textarea" rows="4" cols="50" onkeyup="handleTextChange()"></textarea>
+      <textarea id="teacher" rows="4" cols="50" onkeyup="handleTextChange()"></textarea>
     </div>
     <div id="markdown" />
 </div>
