@@ -55,8 +55,21 @@ a {
   margin: 10px 0;
 }
 
-.showdown-js-editor input {
+.showdown-js-editor i {
   float: right;
+  padding: 2px 3px 2px 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.fa-redo:hover {
+  color: red;
+
+
+}
+
+.fa-play:hover {
+  color: green;
 }
 
 .editor-output {

@@ -137,7 +137,7 @@ const satyrnicon = {
     console.log = console.oldLog;
   },
   getEditorHtml: (content, key) => {
-    return "<div class=\"showdown-js-editor\">\n" + "    <input type=\"button\" onclick=\"state.run('" + key + "')\" value=\"Run\" />\n" + "    <input type=\"button\" onclick=\"state.reset('" + key + "')\" value=\"Refresh\" />\n" + "\n" + "    <pre id=\"" + key + "\" class=\"editor\">" + content + "    </pre>\n" + "    <pre class='editor-output' id=\"output-" + key + "\">\n" + "    </pre>\n" + "  </div>";
+    return "<div class=\"showdown-js-editor\">\n" + "    <div>\n" + "    <i class=\"fas fa-play\" onclick=\"state.run('" + key + "')\" value=\"Run\" ></i>\n" + "    <i class=\"fas fa-redo\" onclick=\"state.reset('" + key + "')\" value=\"Refresh\" ></i>\n" + "    </div>\n" + "\n" + "    <pre id=\"" + key + "\" class=\"editor\">" + content + "    </pre>\n" + "    <pre class='editor-output' id=\"output-" + key + "\">\n" + "    </pre>\n" + "  </div>";
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = (satyrnicon);

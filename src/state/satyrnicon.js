@@ -45,8 +45,10 @@ const satyrnicon = {
   },
   getEditorHtml: (content, key) => {
     return "<div class=\"showdown-js-editor\">\n" +
-      "    <input type=\"button\" onclick=\"state.run('"+key+"')\" value=\"Run\" />\n" +
-      "    <input type=\"button\" onclick=\"state.reset('"+key+"')\" value=\"Refresh\" />\n" +
+      "    <div>\n" +
+      "    <i class=\"fas fa-play\" onclick=\"state.run('"+key+"')\" value=\"Run\" ></i>\n" +
+      "    <i class=\"fas fa-redo\" onclick=\"state.reset('"+key+"')\" value=\"Refresh\" ></i>\n" +
+      "    </div>\n" +
       "\n" +
       "    <pre id=\""+key+"\" class=\"editor\">" + content +
       "    </pre>\n" +
