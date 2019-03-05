@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog } from "electron";
+import { app, dialog } from "electron";
 var path = require('path');
 
 export const fileMenuTemplate = {
@@ -10,6 +10,11 @@ export const fileMenuTemplate = {
       click: fileOpenDialog
     },
     {
+      label: "Toggle Teacher Mode",
+      accelerator: "CmdOrCtrl+T",
+      click: toggleTeacherMode
+    },
+    {
       label: "Quit",
       accelerator: "CmdOrCtrl+Q",
       click: () => {
@@ -19,8 +24,13 @@ export const fileMenuTemplate = {
   ]
 };
 
+function toggleTeacherMode() {
+
+  app.mainWindow.send('toggle-teacher-mode');
+
+}
+
 function fileOpenDialog() {
-  console.log("OPEN FILE DIALOG")
     var fileNames;
     const options = {
         title: 'Open a markdown file',
@@ -38,7 +48,6 @@ function fileOpenDialog() {
             return;
         }
 
-        console.log("OPEN:" + fileNames);
         app.mainWindow.send('open-file',fileNames);
     })
 }

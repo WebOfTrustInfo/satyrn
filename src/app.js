@@ -16,6 +16,9 @@ import state from './state/satyrnicon'
 import { remote } from "electron";
 import showdown  from 'showdown';
 
+const ipc = require('electron').ipcRenderer;
+
+
 window.showdown = showdown;
 window.state = state;
 
@@ -27,7 +30,6 @@ const osMap = {
   linux: "Linux"
 };
 
-const ipc = require('electron').ipcRenderer
 
 ipc.on('open-file', function (event, arg) {
   fs.readFile( arg[0], function (err, data) {
@@ -37,7 +39,14 @@ ipc.on('open-file', function (event, arg) {
     const text = data.toString();
     renderDocument(text)
   });
-})
+});
+
+let isTeacherMode = false;
+ipc.on('toggle-teacher-mode', function(event, args) {
+  isTeacherMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
+  isTeacherMode = !isTeacherMode;
+});
+
 
 function loadFile() {
   ipc.send('load-file')
@@ -54,7 +63,6 @@ function renderDocument(text) {
   const html  = converter.makeHtml(text);
   document.querySelector("#markdown").innerHTML = html;
   document.querySelector("#teacher").innerHTML = text;
-  document.querySelector("#teacher").style.display = "block";
   state.initialiseEditors();
 }
 
