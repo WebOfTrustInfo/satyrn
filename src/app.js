@@ -39,6 +39,7 @@ ipc.on('open-file', function (event, arg) {
     currentFile = arg[0];
     const text = data.toString();
     renderDocument(text)
+    handleTextChange();
   });
 });
 
