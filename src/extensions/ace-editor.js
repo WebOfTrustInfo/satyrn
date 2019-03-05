@@ -31,10 +31,3 @@ showdown.extension('aceEditor', () => {
   ]
 });
 
-
-// module.exports = {
-//   initialiseEditors:initialiseEditors,
-//   renderDocument:renderDocument
-// }
-
-//init();

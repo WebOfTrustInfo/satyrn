@@ -5,7 +5,7 @@
 
 import path from "path";
 import url from "url";
-import { app, dialog, Menu } from "electron";
+import { app, dialog, Menu, shell } from "electron";
 import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import { fileMenuTemplate } from "./menu/file_menu_template";
@@ -58,6 +58,8 @@ app.on("ready", () => {
 app.on("window-all-closed", () => {
   app.quit();
 });
+
+
 
 const ipc = require('electron').ipcMain
 
