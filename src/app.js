@@ -44,12 +44,6 @@ function loadFile() {
 }
 const converter = new showdown.Converter({extensions: ['aceEditor']});
 
-
-function init() {
-  const text = document.getElementById("textarea").value;
-  renderDocument(text);
-}
-
 function handleTextChange() {
   const text = document.getElementById("teacher").value;
   renderDocument(text)
