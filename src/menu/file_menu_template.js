@@ -10,9 +10,18 @@ export const fileMenuTemplate = {
       click: fileOpenDialog
     },
     {
-      label: "Toggle Teacher Mode",
-      accelerator: "CmdOrCtrl+T",
-      click: toggleTeacherMode
+      label: "Edit Mode",
+      type: "checkbox",
+      accelerator: "CmdOrCtrl+E",
+      click: toggleEditMode,
+      checked: false
+    },
+    {
+      label: "Develop Mode",
+      type: "checkbox",
+      accelerator: "CmdOrCtrl+D",
+      click: toggleDevelopMode,
+      checked: false
     },
     {
       label: "Quit",
@@ -24,9 +33,15 @@ export const fileMenuTemplate = {
   ]
 };
 
-function toggleTeacherMode() {
+function toggleEditMode() {
 
-  app.mainWindow.send('toggle-teacher-mode');
+  app.mainWindow.send('toggle-edit-mode');
+
+}
+
+function toggleDevelopMode() {
+
+  app.mainWindow.send('toggle-develop-mode');
 
 }
 

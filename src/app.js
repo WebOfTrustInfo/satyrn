@@ -41,10 +41,10 @@ ipc.on('open-file', function (event, arg) {
   });
 });
 
-let isTeacherMode = false;
-ipc.on('toggle-teacher-mode', function(event, args) {
-  isTeacherMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
-  isTeacherMode = !isTeacherMode;
+let isEditMode = false;
+ipc.on('toggle-edit-mode', function(event, args) {
+  isEditMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
+  isEditMode = !isEditMode;
 });
 
 
