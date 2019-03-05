@@ -10,12 +10,10 @@ import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import { fileMenuTemplate } from "./menu/file_menu_template";
 import createWindow from "./helpers/window";
-import reload from 'electron-reload';
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
 import env from "env";
 
-reload(__dirname);
 
 const setApplicationMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
@@ -29,6 +27,8 @@ const setApplicationMenu = () => {
 // Thanks to this you can use production and development versions of the app
 // on same machine like those are two separate apps.
 if (env.name !== "production") {
+  let reload = require('electron-reload')
+  reload(__dirname);
   const userDataPath = app.getPath("userData");
   app.setPath("userData", `${userDataPath} (${env.name})`);
 }

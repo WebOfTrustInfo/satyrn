@@ -1,7 +1,7 @@
 {
-  "name": "electron-boilerplate",
-  "productName": "Electron Boilerplate",
-  "description": "Starter for your Electron application",
+  "name": "satyrn",
+  "productName": "Satyrn",
+  "description": "A markdown interpreter for writing node library tutorials",
   "version": "0.0.0",
   "private": true,
   "author": "Mr. Gumby <mr.gumby@example.com>",
