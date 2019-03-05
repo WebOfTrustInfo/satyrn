@@ -17,7 +17,7 @@ import { remote } from "electron";
 import showdown  from 'showdown';
 
 const ipc = require('electron').ipcRenderer;
-
+let currentFile = "";
 
 window.showdown = showdown;
 window.state = state;
@@ -36,8 +36,23 @@ ipc.on('open-file', function (event, arg) {
     if (err) {
       throw err;
     }
+    currentFile = arg[0];
     const text = data.toString();
     renderDocument(text)
+  });
+});
+
+ipc.on('save-file', function(event, arg) {
+  let fileContent = document.querySelector("#teacher").innerHTML;
+  let fileName = arg ? arg : currentFile;
+  console.log(fileContent);
+  console.log(fileName);
+  fs.writeFile(fileName, fileContent, function(err) {
+    if(err) {
+      return console.log(err);
+    }
+    currentFile = fileName;
+    console.log("The file was saved!");
   });
 });
 

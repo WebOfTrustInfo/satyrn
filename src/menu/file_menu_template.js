@@ -5,11 +5,6 @@ export const fileMenuTemplate = {
   label: "File",
   submenu: [
     {
-      label: "Open",
-      accelerator: "CmdOrCtrl+O",
-      click: fileOpenDialog
-    },
-    {
       label: "Edit Mode",
       type: "checkbox",
       accelerator: "CmdOrCtrl+E",
@@ -22,6 +17,21 @@ export const fileMenuTemplate = {
       accelerator: "CmdOrCtrl+D",
       click: toggleDevelopMode,
       checked: false
+    },
+    {
+      label: "Open",
+      accelerator: "CmdOrCtrl+O",
+      click: fileOpenDialog
+    },
+    {
+      label: "Save",
+      accelerator: "CmdOrCtrl+S",
+      click: saveFile
+    },
+    {
+      label: "Save As",
+      // accelerator: "CmdOrCtrl+O",
+      click: saveFileAs
     },
     {
       label: "Quit",
@@ -43,6 +53,31 @@ function toggleDevelopMode() {
 
   app.mainWindow.send('toggle-develop-mode');
 
+}
+
+function saveFile() {
+  app.mainWindow.send('save-file', null);
+}
+
+function saveFileAs() {
+  var fileNames;
+  const options = {
+    title: 'Save Markdown As',
+    buttonLabel: 'Save',
+    filters: [
+      { name: 'markdown', extensions: ['md'] }
+    ]
+  };
+  dialog.showSaveDialog(null, options, (fileNames) => {
+
+    // fileNames is an array that contains all the selected
+    if(fileNames === undefined){
+      console.log("No file selected");
+      return;
+    }
+
+    app.mainWindow.send('save-file',fileNames);
+  })
 }
 
 function fileOpenDialog() {
