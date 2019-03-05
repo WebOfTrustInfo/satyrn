@@ -5,7 +5,7 @@
 
 import path from "path";
 import url from "url";
-import { app, dialog, Menu, shell } from "electron";
+import {app, BrowserWindow, dialog, ipcRenderer, Menu, shell} from "electron";
 import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import { fileMenuTemplate } from "./menu/file_menu_template";
@@ -15,7 +15,7 @@ import createWindow from "./helpers/window";
 import env from "env";
 
 
-const setApplicationMenu = () => {
+export const setApplicationMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
   if (env.name !== "production") {
     menus.push(devMenuTemplate);
@@ -49,11 +49,12 @@ app.on("ready", () => {
       slashes: true
     })
   );
-
   // if (env.name === "development") {
   //   mainWindow.openDevTools();
   // }
 });
+
+
 
 app.on("window-all-closed", () => {
   app.quit();
@@ -68,3 +69,5 @@ ipc.on('load-file', function (event, arg) {
   console.log("OPEN" + fileName)
   app.mainWindow.send('open-file',fileName);
 })
+
+
