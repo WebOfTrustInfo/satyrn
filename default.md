@@ -1,7 +1,7 @@
 # Satyrn
 A Markdown-based JavaScript Sandbox 
 
-https://github.com/WebOfTrustInfo/satyrn  
+&lt;a href="https://github.com/WebOfTrustInfo/satyrn"&gt; https://github.com/WebOfTrustInfo/satyrn&lt;/a&gt; 
 
 Joe Andrieu joe@legreq.com 
 
