@@ -47,6 +47,12 @@ export const fileMenuTemplate = {
   ]
 };
 
+function toggleRenderMode() {
+  app.mainWindow.send('toggle-render-mode');
+
+}
+
+
 function toggleEditMode() {
 
   app.mainWindow.send('toggle-edit-mode');
