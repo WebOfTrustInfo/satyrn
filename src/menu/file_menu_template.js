@@ -1,4 +1,6 @@
-import { app, dialog } from "electron";
+import {app, BrowserWindow, dialog} from "electron";
+import { setApplicationMenu} from "../background";
+
 var path = require('path');
 import env from "env";
 
@@ -9,6 +11,11 @@ export const fileMenuTemplate = {
       label: "Open",
       accelerator: "CmdOrCtrl+O",
       click: fileOpenDialog
+    },
+    {
+      label: "Reload",
+      accelerator: "CmdOrCtrl+R",
+      click: reloadPage
     },
     {
       label: "Save",
@@ -49,7 +56,11 @@ export const fileMenuTemplate = {
 
 function toggleRenderMode() {
   app.mainWindow.send('toggle-render-mode');
+}
 
+function reloadPage() {
+  BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
+  setApplicationMenu()
 }
 
 

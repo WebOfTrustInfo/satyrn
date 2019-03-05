@@ -14,7 +14,7 @@ import state from './state/satyrnicon'
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
 
-import { shell, ipcRenderer, remote } from "electron";
+import { shell, ipcRenderer, remote, BrowserWindow } from "electron";
 import showdown  from 'showdown';
 
 let currentFile = "";
@@ -29,6 +29,7 @@ const osMap = {
   darwin: "macOS",
   linux: "Linux"
 };
+
 
 
 ipcRenderer.on('open-file', function (event, arg) {
@@ -63,10 +64,14 @@ ipcRenderer.on('toggle-edit-mode', function(event, args) {
   isEditMode = !isEditMode;
 });
 
+
 let shouldRealTimeRender = true;
 ipcRenderer.on('toggle-render-mode', (event, args) => {
   shouldRealTimeRender = !shouldRealTimeRender;
-})
+});
+
+
+
 
 
 function loadFile() {
@@ -89,6 +94,8 @@ function renderDocument(text) {
   document.querySelector("#teacher").innerHTML = text;
   state.initialiseEditors();
 }
+
+
 
 window.handleTextChange = handleTextChange;
 window.loadFile = loadFile
