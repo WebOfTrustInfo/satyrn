@@ -6,21 +6,6 @@ export const fileMenuTemplate = {
   label: "File",
   submenu: [
     {
-      label: "Edit Mode",
-      type: "checkbox",
-      accelerator: "CmdOrCtrl+E",
-      click: toggleEditMode,
-      checked: false
-    },
-    {
-      label: "Develop Mode",
-      type: "checkbox",
-      accelerator: "CmdOrCtrl+D",
-      click: toggleDevelopMode,
-      checked: env.name !== "production",
-      visible: env.name !== "production",
-    },
-    {
       label: "Open",
       accelerator: "CmdOrCtrl+O",
       click: fileOpenDialog
@@ -35,13 +20,30 @@ export const fileMenuTemplate = {
       // accelerator: "CmdOrCtrl+O",
       click: saveFileAs
     },
+    { type: "separator" },
+    {
+      label: "Edit Mode",
+      type: "checkbox",
+      accelerator: "CmdOrCtrl+E",
+      click: toggleEditMode,
+      checked: false
+    },
+    {
+      label: "Develop Mode",
+      type: "checkbox",
+      accelerator: "CmdOrCtrl+D",
+      click: toggleDevelopMode,
+      checked: env.name !== "production",
+      visible: env.name !== "production",
+    },
+    { type: "separator" },
     {
       label: "Quit",
       accelerator: "CmdOrCtrl+Q",
       click: () => {
         app.quit();
       }
-    }
+    },
   ]
 };
 
