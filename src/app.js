@@ -6,6 +6,7 @@ import "./stylesheets/main.css";
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 import "./extensions/ace-editor";
+import "./extensions/mailito-email";
 
 import state from './state/satyrnicon'
 
@@ -13,10 +14,9 @@ import state from './state/satyrnicon'
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
 
-import { remote } from "electron";
+import { shell, ipcRenderer, remote } from "electron";
 import showdown  from 'showdown';
 
-const ipc = require('electron').ipcRenderer;
 let currentFile = "";
 
 window.showdown = showdown;
@@ -31,7 +31,7 @@ const osMap = {
 };
 
 
-ipc.on('open-file', function (event, arg) {
+ipcRenderer.on('open-file', function (event, arg) {
   fs.readFile( arg[0], function (err, data) {
     if (err) {
       throw err;
@@ -43,7 +43,7 @@ ipc.on('open-file', function (event, arg) {
   });
 });
 
-ipc.on('save-file', function(event, arg) {
+ipcRenderer.on('save-file', function(event, arg) {
   let fileContent = document.querySelector("#teacher").innerHTML;
   let fileName = arg ? arg : currentFile;
   console.log(fileContent);
@@ -58,16 +58,16 @@ ipc.on('save-file', function(event, arg) {
 });
 
 let isEditMode = false;
-ipc.on('toggle-edit-mode', function(event, args) {
+ipcRenderer.on('toggle-edit-mode', function(event, args) {
   isEditMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
   isEditMode = !isEditMode;
 });
 
 
 function loadFile() {
-  ipc.send('load-file')
+  ipcRenderer.send('load-file')
 }
-const converter = new showdown.Converter({extensions: ['aceEditor']});
+const converter = new showdown.Converter({extensions: ['aceEditor', 'mailitoEmail']});
 
 function handleTextChange() {
   const text = document.getElementById("teacher").value;
@@ -84,6 +84,7 @@ function renderDocument(text) {
 
 window.handleTextChange = handleTextChange;
 window.loadFile = loadFile
+
 
 app.mainWindow.send('open-file',["./default.md"]);
 
