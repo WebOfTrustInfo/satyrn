@@ -63,6 +63,11 @@ ipcRenderer.on('toggle-edit-mode', function(event, args) {
   isEditMode = !isEditMode;
 });
 
+let shouldRealTimeRender = true;
+ipcRenderer.on('toggle-render-mode', (event, args) => {
+  shouldRealTimeRender = !shouldRealTimeRender;
+})
+
 
 function loadFile() {
   ipcRenderer.send('load-file')
@@ -70,8 +75,11 @@ function loadFile() {
 const converter = new showdown.Converter({extensions: ['aceEditor', 'mailitoEmail']});
 
 function handleTextChange() {
-  const text = document.getElementById("teacher").value;
-  renderDocument(text)
+  if (shouldRealTimeRender) {
+    const text = document.getElementById("teacher").value;
+    renderDocument(text)
+  }
+
 }
 
 function renderDocument(text) {

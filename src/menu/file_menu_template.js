@@ -13,6 +13,12 @@ export const fileMenuTemplate = {
       checked: false
     },
     {
+      label: "Render Mode",
+      type: "checkbox",
+      click: toggleRenderMode,
+      checked: true
+    },
+    {
       label: "Develop Mode",
       type: "checkbox",
       accelerator: "CmdOrCtrl+D",
@@ -44,6 +50,12 @@ export const fileMenuTemplate = {
     }
   ]
 };
+
+function toggleRenderMode() {
+  app.mainWindow.send('toggle-render-mode');
+
+}
+
 
 function toggleEditMode() {
 
