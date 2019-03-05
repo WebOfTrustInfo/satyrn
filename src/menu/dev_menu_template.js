@@ -17,12 +17,5 @@ export const devMenuTemplate = {
         BrowserWindow.getFocusedWindow().toggleDevTools();
       }
     },
-    {
-      label: "Quit",
-      accelerator: "CmdOrCtrl+Q",
-      click: () => {
-        app.quit();
-      }
-    }
   ]
 };

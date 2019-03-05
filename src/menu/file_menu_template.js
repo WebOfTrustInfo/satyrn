@@ -1,5 +1,6 @@
 import { app, dialog } from "electron";
 var path = require('path');
+import env from "env";
 
 export const fileMenuTemplate = {
   label: "File",
@@ -16,7 +17,8 @@ export const fileMenuTemplate = {
       type: "checkbox",
       accelerator: "CmdOrCtrl+D",
       click: toggleDevelopMode,
-      checked: false
+      checked: env.name !== "production",
+      visible: env.name !== "production",
     },
     {
       label: "Open",
