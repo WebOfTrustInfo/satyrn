@@ -79,34 +79,31 @@ ipcRenderer.on('toggle-render-mode', (event, args) => {
 });
 
 ipcRenderer.on('show-guide', (event,args) => {
-  console.log('show guide');
   if(guideHtml==="")
     loadGuide();
   show(guideHtml, '_blank');
 });
 
 ipcRenderer.on('show-about', (event,args) => {
-  console.log('show about');
-  if(aboutHtml==="")
+ if(aboutHtml==="")
     loadAbout();
   show(aboutHtml, 'about');
 });
 
 
 function show(html, target) {
-  console.log(target+' showing: '+html);
   var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
 //  var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
   w.document.write(html);
 }
 
 function loadGuide() {
-  var md = fs.readFileSync(guideFilename);
+  var md = fs.readFileSync(guideFilename, 'UTF-8');
   guideHtml = converter.makeHtml(md);
 }
 
 function loadAbout() {
-  var md = fs.readileSync(aboutFilename);
+  var md = fs.readFileSync(aboutFilename, 'UTF-8');
   aboutHtml = converter.makeHtml(md);
 }
 
