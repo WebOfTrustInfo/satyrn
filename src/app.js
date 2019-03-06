@@ -22,10 +22,10 @@ let currentFile = "";
 // cache help and about files
 const aboutFilename = "src/about.md"
 let aboutMd = "";
-let aboutHtml = "<html>ho</html>";
+let aboutHtml = "";
 const guideFilename = "src/guide.md"
 let guideMd = "";
-let guideHtml = "<html>hi</html>";
+let guideHtml = "";
 
 window.showdown = showdown;
 window.state = state;
