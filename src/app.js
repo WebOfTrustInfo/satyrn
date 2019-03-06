@@ -19,6 +19,14 @@ import showdown  from 'showdown';
 
 let currentFile = "";
 
+// cache help and about files
+const aboutFilename = "src/about.md"
+let aboutMd = "";
+let aboutHtml = "<html>ho</html>";
+const guideFilename = "src/guide.md"
+let guideMd = "";
+let guideHtml = "<html>hi</html>";
+
 window.showdown = showdown;
 window.state = state;
 
@@ -70,8 +78,37 @@ ipcRenderer.on('toggle-render-mode', (event, args) => {
   shouldRealTimeRender = !shouldRealTimeRender;
 });
 
+ipcRenderer.on('show-guide', (event,args) => {
+  console.log('show guide');
+  if(guideHtml==="")
+    loadGuide();
+  show(guideHtml, '_blank');
+});
+
+ipcRenderer.on('show-about', (event,args) => {
+  console.log('show about');
+  if(aboutHtml==="")
+    loadAbout();
+  show(aboutHtml, 'about');
+});
 
 
+function show(html, target) {
+  console.log(target+' showing: '+html);
+  var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
+//  var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
+  w.document.write(html);
+}
+
+function loadGuide() {
+  var md = fs.readFileSync(guideFilename);
+  guideHtml = converter.makeHtml(md);
+}
+
+function loadAbout() {
+  var md = fs.readileSync(aboutFilename);
+  aboutHtml = converter.makeHtml(md);
+}
 
 
 function loadFile() {
