@@ -40,7 +40,10 @@ app.on("ready", () => {
 
   const mainWindow = createWindow("main", {
     width: 1000,
-    height: 600
+    height: 600,
+    webPreferences: {
+      nativeWindowOpen: true
+    }
   });
   app.mainWindow = mainWindow
 
@@ -56,9 +59,14 @@ app.on("ready", () => {
   // }
 
   mainWindow.webContents.on('new-window', function(e, url) {
-    e.preventDefault();
-    shell.openExternal(url);
-    return false;
+    // about:blank is opened when creating stand-alone helper windows
+    // such as for the About page and the Guide
+    if(url && url !== 'about:blank') {
+      e.preventDefault();
+      console.log('EXTERNAL')
+       shell.openExternal(url);
+       return false;
+      }
   });
 });
 
