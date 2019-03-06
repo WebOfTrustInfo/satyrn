@@ -9,6 +9,7 @@ import {app, BrowserWindow, dialog, ipcRenderer, Menu, shell} from "electron";
 import { devMenuTemplate } from "./menu/dev_menu_template";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import { fileMenuTemplate } from "./menu/file_menu_template";
+import { helpMenuTemplate } from "./menu/help_menu_template";
 import createWindow from "./helpers/window";
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
@@ -20,6 +21,7 @@ export const setApplicationMenu = () => {
   if (env.name !== "production") {
     menus.push(devMenuTemplate);
   }
+  menus.push(helpMenuTemplate); // pushed after dev so it is always right-most menu
   Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
 };
 
@@ -52,6 +54,12 @@ app.on("ready", () => {
   // if (env.name === "development") {
   //   mainWindow.openDevTools();
   // }
+
+  mainWindow.webContents.on('new-window', function(e, url) {
+    e.preventDefault();
+    shell.openExternal(url);
+    return false;
+  });
 });
 
 
