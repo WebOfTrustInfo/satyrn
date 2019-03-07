@@ -7,6 +7,7 @@ import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 import "./extensions/ace-editor";
 import "./extensions/mailito-email";
+import "./extensions/anchor-target";
 
 import state from './state/satyrnicon'
 
@@ -92,18 +93,19 @@ ipcRenderer.on('show-about', (event,args) => {
 
 
 function show(html, target) {
-  var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
+  let w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
 //  var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
   w.document.write(html);
+
 }
 
 function loadGuide() {
-  var md = fs.readFileSync(guideFilename, 'UTF-8');
+  let md = fs.readFileSync(guideFilename, 'UTF-8');
   guideHtml = converter.makeHtml(md);
 }
 
 function loadAbout() {
-  var md = fs.readFileSync(aboutFilename, 'UTF-8');
+  let md = fs.readFileSync(aboutFilename, 'UTF-8');
   aboutHtml = converter.makeHtml(md);
 }
 
@@ -111,7 +113,7 @@ function loadAbout() {
 function loadFile() {
   ipcRenderer.send('load-file')
 }
-const converter = new showdown.Converter({extensions: ['aceEditor', 'mailitoEmail']});
+const converter = new showdown.Converter({extensions: ['aceEditor', 'mailitoEmail', 'anchorTarget']});
 
 function handleTextChange() {
   if (shouldRealTimeRender) {

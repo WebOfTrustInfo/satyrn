@@ -18,7 +18,7 @@ showdown.extension('mailitoEmail', () => {
       filter: function (text) {
         for (var i=0; i< content.length; ++i) {
           var pat = '%EMAIL' + i + '%';
-          text = text.replace(new RegExp(pat, 'gi'), "<a href='mailto:" + content[i] + "' >" + content[i] + "</a>");
+          text = text.replace(new RegExp(pat, 'gi'), "<a href=\"mailto:" + content[i] + "\" >" + content[i] + "</a>");
         }
         //reset array
         content = [];
