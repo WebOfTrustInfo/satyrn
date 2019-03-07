@@ -1,7 +1,13 @@
 # Satyrn
 A Markdown-based JavaScript sandbox 
 
-&lt;a href="https://github.com/WebOfTrustInfo/satyrn" target="_blank"&gt; https://github.com/WebOfTrustInfo/satyrn&lt;/a&gt; 
+Source specified targets
+* No target (open in new browser). &lt;a href="http://blog.joeandrieu.com"&gt; http://blog.joeandrieu.com&lt;/a&gt; 
+* Arbitrary target (open in new browser). 
+&lt;a href="http://blog.joeandrieu.com" target="fancy"&gt; http://blog.joeandrieu.com&lt;/a&gt;
+* _blank target (open in new browser) &lt;a href="https://github.com/WebOfTrustInfo/satyrn" target="_blank"&gt; https://github.com/WebOfTrustInfo/satyrn&lt;/a&gt; 
+* satyrn target (open in current Satyrn) &lt;a href="https://github.com/WebOfTrustInfo" target="Saturn"&gt; https://github.com/WebOfTrustInfo&lt;/a&gt; 
+* _satyrn target (open in new Saturn window) &lt;a href="https://github.com/WebOfTrustInfo" target="_saturn"&gt; https://github.com/WebOfTrustInfo&lt;/a&gt; 
 
 
 Satyrn helps people learn how to use JavaScript. It combines static markdown text with interactive JavaScript blocks. The markdown can be used to teach concepts while the JavaScript blocks can be used to explore the concepts and test comprehansion.
