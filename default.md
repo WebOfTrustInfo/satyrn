@@ -2,13 +2,17 @@
 A Markdown-based JavaScript sandbox 
 
 Source specified targets
-* No target (open in new browser). &lt;a href="http://blog.joeandrieu.com"&gt; http://blog.joeandrieu.com&lt;/a&gt; 
+* No target html (open in new browser). &lt;a href="http://blog.joeandrieu.com"&gt; http://blog.joeandrieu.com&lt;/a&gt;
+* No target md (open in new browser). [http://blog.joeandrieu.com](http://blog.joeandrieu.com) 
 * Arbitrary target (open in new browser). 
 &lt;a href="http://blog.joeandrieu.com" target="fancy"&gt; http://blog.joeandrieu.com&lt;/a&gt;
 * _blank target (open in new browser) &lt;a href="https://github.com/WebOfTrustInfo/satyrn" target="_blank"&gt; https://github.com/WebOfTrustInfo/satyrn&lt;/a&gt; 
 * satyrn target (open in current Satyrn) &lt;a href="https://github.com/WebOfTrustInfo" target="Saturn"&gt; https://github.com/WebOfTrustInfo&lt;/a&gt; 
 * _satyrn target (open in new Saturn window) &lt;a href="https://github.com/WebOfTrustInfo" target="_saturn"&gt; https://github.com/WebOfTrustInfo&lt;/a&gt; 
+* local #fragment url html (just scroll within current document) &lt;a href="#example"&gt;Example&lt;/a&gt; 
+* local #fragment url markdown (just scroll within current document) [Example](#example)
 
+&lt;a name="example"&gt;Example anchor&lt;/a&gt;
 
 Satyrn helps people learn how to use JavaScript. It combines static markdown text with interactive JavaScript blocks. The markdown can be used to teach concepts while the JavaScript blocks can be used to explore the concepts and test comprehansion.
 
