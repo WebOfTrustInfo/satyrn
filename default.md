@@ -7,10 +7,11 @@ Source specified targets
 * Arbitrary target (open in new browser). 
 &lt;a href="http://blog.joeandrieu.com" target="fancy"&gt; http://blog.joeandrieu.com&lt;/a&gt;
 * _blank target (open in new browser) &lt;a href="https://github.com/WebOfTrustInfo/satyrn" target="_blank"&gt; https://github.com/WebOfTrustInfo/satyrn&lt;/a&gt; 
-* satyrn target (open in current Satyrn) &lt;a href="https://github.com/WebOfTrustInfo" target="Saturn"&gt; https://github.com/WebOfTrustInfo&lt;/a&gt; 
-* _satyrn target (open in new Saturn window) &lt;a href="https://github.com/WebOfTrustInfo" target="_saturn"&gt; https://github.com/WebOfTrustInfo&lt;/a&gt; 
+* satyrn target (open in current Satyrn) &lt;a href="https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md" target="Saturn"&gt; https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md&lt;/a&gt; 
+* _satyrn target (open in new Saturn window) &lt;a href="https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md" target="_saturn"&gt; https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md&lt;/a&gt; 
 * local #fragment url html (just scroll within current document) &lt;a href="#example"&gt;Example&lt;/a&gt; 
-* local #fragment url markdown (just scroll within current document) [Example](#example)
+* local #fragment url markdown (just scroll within current document) [Example](#example)]
+
 
 &lt;a name="example"&gt;Example anchor&lt;/a&gt;
 
