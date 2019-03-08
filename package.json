@@ -33,6 +33,7 @@
   "dependencies": {
     "dialog": "^0.3.1",
     "fs-jetpack": "^2.1.0",
+    "path": "^0.12.7",
     "showdown": "^1.9.0"
   },
   "devDependencies": {

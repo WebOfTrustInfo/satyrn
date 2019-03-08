@@ -1,15 +1,15 @@
 import fs from 'fs';
+import path from 'path';
 
 import "./stylesheets/main.css";
 
 // Small helpers you might want to keep
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
-import "./extensions/ace-editor";
-import "./extensions/mailito-email";
-import "./extensions/anchor-target";
+
 
 import state from './state/satyrnicon'
+import converter from './helpers/converter';
 
 // ----------------------------------------------------------------------------
 // Everything below is just to show you how it works. You can delete all of it.
@@ -82,7 +82,7 @@ ipcRenderer.on('toggle-render-mode', (event, args) => {
 ipcRenderer.on('show-guide', (event,args) => {
   if(guideHtml==="")
     loadGuide();
-  show(guideHtml, '_blank');
+  show(guideHtml, 'guide');
 });
 
 ipcRenderer.on('show-about', (event,args) => {
@@ -94,9 +94,19 @@ ipcRenderer.on('show-about', (event,args) => {
 
 function show(html, target) {
   let w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
-//  var w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
-  w.document.write(html);
 
+
+  w.document.body.innerHTML = "";
+  w.document.write(html)
+
+  let link = document.createElement("link")
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  const cssPath = path.resolve(__dirname, './main.css');
+  console.log(cssPath);
+  link.href = cssPath;
+
+  w.document.head.appendChild(link);
 }
 
 function loadGuide() {
@@ -113,7 +123,6 @@ function loadAbout() {
 function loadFile() {
   ipcRenderer.send('load-file')
 }
-const converter = new showdown.Converter({extensions: ['aceEditor', 'mailitoEmail', 'anchorTarget']});
 
 function handleTextChange() {
   if (shouldRealTimeRender) {
