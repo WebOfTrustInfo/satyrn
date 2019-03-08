@@ -61,12 +61,9 @@ app.on("ready", () => {
   mainWindow.webContents.on('new-window', function(e, url, disposition) {
     // about:blank is opened when creating stand-alone helper windows
     // such as for the About page and the Guide
-    console.log(url)
-    console.log("Disposition :" + disposition)
-    if (disposition === "satyrn") {
+    if (disposition === "_satyrn") {
       return true
     }
-
     if(url && url !== 'about:blank') {
       e.preventDefault();
       console.log('EXTERNAL')
