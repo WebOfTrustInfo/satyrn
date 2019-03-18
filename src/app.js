@@ -88,13 +88,22 @@ ipcRenderer.on('show-guide', (event,args) => {
 ipcRenderer.on('show-about', (event,args) => {
  if(aboutHtml==="")
     loadAbout();
-  show(aboutHtml, 'about');
+ show(aboutHtml, 'about');
 });
 
 
 function show(html, target) {
-  let w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
+  let w = window.open("", target, "toolbar=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=500");
 
+  // close the old window so we can open with focus
+  if (w.document.body.innerHTML) {
+  //    console.log(target + ' exists');
+    setTimeout(function () {
+      w.close();
+      show(html, target);
+    }, 100);
+    return;
+  }
 
   w.document.body.innerHTML = "";
   w.document.write(html)
@@ -107,6 +116,7 @@ function show(html, target) {
   link.href = cssPath;
 
   w.document.head.appendChild(link);
+
 }
 
 function loadGuide() {
