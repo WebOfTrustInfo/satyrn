@@ -64,6 +64,11 @@ app.on("ready", () => {
     if (disposition === "_satyrn") {
       return true
     }
+    if (disposition === "satyrn") {
+      e.preventDefault();
+      mainWindow.loadURL(url);
+      return false
+    }
     if(url && url !== 'about:blank') {
       e.preventDefault();
       console.log('EXTERNAL')
