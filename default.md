@@ -15,11 +15,15 @@ Source specified targets
 
 &lt;a name="example"&gt;Example anchor&lt;/a&gt;
 
+
 Satyrn helps people learn how to use JavaScript. It combines static markdown text with interactive JavaScript blocks. The markdown can be used to teach concepts while the JavaScript blocks can be used to explore the concepts and test comprehansion.
 
 The tool is meant to be lightweight shell around the content.
 
-
+## Example JavaScript Code Block
+```javascript
+console.log('Hello World!');
+```
 
 ## Requirements
 * File format is markdown
