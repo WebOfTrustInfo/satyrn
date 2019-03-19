@@ -5,8 +5,9 @@ export class Kernel {
 
   constructor(satyrnicon) {
     this.satyrnicon = satyrnicon
-    this.nodePath = "/Users/korsimoro/.nvm/versions/node/v8.1.1/bin/node"
+    //this.nodePath = "/Users/korsimoro/.nvm/versions/node/v8.1.1/bin/node"
     //this.nodePath = "/tmp/wrapper"
+    this.nodePath = "node"
     this.proc = undefined
     this.outputKey = undefined
 
