@@ -8,17 +8,23 @@ import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 
 
-import state from './state/satyrnicon'
-import converter from './helpers/converter';
 
 // ----------------------------------------------------------------------------
 // Everything below is just to show you how it works. You can delete all of it.
 // ----------------------------------------------------------------------------
 
 import { shell, ipcRenderer, remote, BrowserWindow } from "electron";
-import showdown  from 'showdown';
+const app = remote.app;
 
-let currentFile = "";
+import showdown  from 'showdown';
+window.showdown = showdown;
+
+
+// --------------------- --------------------- ---------------------
+// application state
+import state from './state/satyrnicon'
+window.state = state;
+
 
 // cache help and about files
 const aboutFilename = "src/about.md"
@@ -28,55 +34,44 @@ const guideFilename = "src/guide.md"
 let guideMd = "";
 let guideHtml = "";
 
-window.showdown = showdown;
-window.state = state;
-
-const app = remote.app;
-
-const osMap = {
-  win32: "Windows",
-  darwin: "macOS",
-  linux: "Linux"
-};
-
-
-
+// --------------------- --------------------- ---------------------
+// respond to events from the main-process
+//  open-file -> load a file, and replace it in the browser
+//  save-file -> write the current document to a file.
+//  toggle-edit-mode -> enable document editing (teacher mode)
+//  toggle-render-mode -> flip real time render mode
+//  show-guide -> change the display to the 'guide' page
+//  show-about -> change the display to the 'about' page
 ipcRenderer.on('open-file', function (event, arg) {
   fs.readFile( arg[0], function (err, data) {
     if (err) {
       throw err;
     }
-    currentFile = arg[0];
-    const text = data.toString();
-    renderDocument(text)
-    handleTextChange();
+    state.openFile(arg[0],data)
   });
 });
 
 ipcRenderer.on('save-file', function(event, arg) {
   let fileContent = document.querySelector("#teacher").innerHTML;
-  let fileName = arg ? arg : currentFile;
+  let fileName = arg ? arg : state.currentFile;
   console.log(fileContent);
   console.log(fileName);
   fs.writeFile(fileName, fileContent, function(err) {
     if(err) {
       return console.log(err);
     }
-    currentFile = fileName;
-    console.log("The file was saved!");
+    state.currentFile = fileName;
+    console.log("The file was saved and the name was changed!");
   });
 });
 
-let isEditMode = false;
 ipcRenderer.on('toggle-edit-mode', function(event, args) {
-  isEditMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
-  isEditMode = !isEditMode;
+  state.isEditMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
+  state.isEditMode = !state.isEditMode;
 });
 
-
-let shouldRealTimeRender = true;
 ipcRenderer.on('toggle-render-mode', (event, args) => {
-  shouldRealTimeRender = !shouldRealTimeRender;
+  state.shouldRealTimeRender = !state.shouldRealTimeRender;
 });
 
 ipcRenderer.on('show-guide', (event,args) => {
@@ -88,22 +83,23 @@ ipcRenderer.on('show-guide', (event,args) => {
 ipcRenderer.on('show-about', (event,args) => {
  if(aboutHtml==="")
     loadAbout();
- show(aboutHtml, 'about');
+  show(aboutHtml, 'about');
 });
 
-
+// --------------------- --------------------- ---------------------
+// action implementations
+// show -> display a styled file like about, guide
+// loadGuide - display the guide file
+// loadAbout -> display the about file
+// loadFile -> instructs main process to use the system file dialog
+//             to load a file
+// handleTextChanged -> re-render document on change if real-time rendering
+// renderDocument -> used by open-file to display a document other
+//                   than about and guide, also used during realTime
+//                   rendering
 function show(html, target) {
-  let w = window.open("", target, "toolbar=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=500");
+  let w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
 
-  // close the old window so we can open with focus
-  if (w.document.body.innerHTML) {
-  //    console.log(target + ' exists');
-    setTimeout(function () {
-      w.close();
-      show(html, target);
-    }, 100);
-    return;
-  }
 
   w.document.body.innerHTML = "";
   w.document.write(html)
@@ -116,7 +112,6 @@ function show(html, target) {
   link.href = cssPath;
 
   w.document.head.appendChild(link);
-
 }
 
 function loadGuide() {
@@ -129,32 +124,17 @@ function loadAbout() {
   aboutHtml = converter.makeHtml(md);
 }
 
-
 function loadFile() {
   ipcRenderer.send('load-file')
 }
 
-function handleTextChange() {
-  if (shouldRealTimeRender) {
-    const text = document.getElementById("teacher").value;
-    renderDocument(text)
-  }
-
-}
-
-function renderDocument(text) {
-
-  const html  = converter.makeHtml(text);
-  document.querySelector("#markdown").innerHTML = html;
-  document.querySelector("#teacher").innerHTML = text;
-  state.initialiseEditors();
-}
 
 
-
-window.handleTextChange = handleTextChange;
+// --------------------- --------------------- ---------------------
+// global access to actions, should we encapsulate as a mutator?
 window.loadFile = loadFile
 
 
+// this opens the default file from the browser, rather than from main...
+// we should document our thinking here.
 app.mainWindow.send('open-file',["./default.md"]);
-

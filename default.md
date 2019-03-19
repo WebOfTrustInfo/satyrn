@@ -1,6 +1,14 @@
 # Satyrn
 A Markdown-based JavaScript sandbox 
 
+```javascript
+console.log('Hello World1!');
+```
+
+```javascript
+console.log('Hello World2!');
+```
+
 Source specified targets
 * No target html (open in new browser). &lt;a href="http://blog.joeandrieu.com"&gt; http://blog.joeandrieu.com&lt;/a&gt;
 * No target md (open in new browser). [http://blog.joeandrieu.com](http://blog.joeandrieu.com) 

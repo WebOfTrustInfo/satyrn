@@ -1,6 +1,16 @@
+import { Kernel } from './kernel'
+import converter from '../helpers/converter';
+
+// This handles the state of a single notebook document.
 const satyrnicon = {
   editors: {},
   state: {},
+
+  isEditMode: false,
+  shouldRealTimeRender: true,
+  currentFile: "",
+  kernel: undefined,
+
   initialiseEditors: () => {
     for (let key in satyrnicon.editors) {
       satyrnicon.addEditor(key);
@@ -22,27 +32,56 @@ const satyrnicon = {
 
     editor.setValue(satyrnicon.state[key])
   },
+
+  resetKernel: () => {
+    if(satyrnicon.kernel) {
+      satyrnicon.kernel.kill()
+    }
+    satyrnicon.kernel = new Kernel(satyrnicon)
+  },
+
+  openFile: (fname,data) => {
+    satyrnicon.resetKernel();
+    satyrnicon.currentFile = fname
+
+    const text = data.toString();
+    satyrnicon.renderDocument(text)
+    satyrnicon.handleTextChange();
+  },
+
   run: (key) => {
     document.querySelector("#output-"+key).innerHTML = "....";
-
     let editor = satyrnicon.getEditor(key);
-    console.oldLog = console.log;
-    let output = '';
-    console.log = function(value)
-    {
-      console.oldLog(value);
-      output+=value;
-      output += '\n';
-      return value;
-    };
-
     const code = editor.getValue()
-
-    eval(code)
-    document.querySelector("#output-"+key).innerHTML = output
-
-    console.log = console.oldLog
+    satyrnicon.kernel.run(key,code)
+    document.querySelector("#output-"+key).innerHTML = ""
   },
+
+  receiveTextOutput: (data,key) => {
+    const current = document.querySelector("#output-"+key).innerHTML
+    const replacement = current + data
+    document.querySelector("#output-"+key).innerHTML = replacement
+  },
+
+  receiveUnsolicitedTextOutput: (data) => {
+    console.log(data)
+  },
+
+  receiveTextError: (data,key) => {
+    const current = document.querySelector("#output-"+key).innerHTML
+    const replacement = current + data
+    document.querySelector("#output-"+key).innerHTML = replacement
+  },
+
+  receiveUnsolicitedTextError: (data) => {
+    console.log(data)
+  },
+
+  reportKernelDeath: () => {
+    console.log("Kernel died")
+    satyrnicon.kernel = undefined
+  },
+
   getEditorHtml: (content, key) => {
     return "<div class=\"showdown-js-editor\">\n" +
       "    <div>\n" +
@@ -55,7 +94,23 @@ const satyrnicon = {
       "    <pre class='editor-output' id=\"output-"+key+"\">\n" +
       "    </pre>\n" +
       "  </div>";
+  },
+
+  handleTextChange: () => {
+    if (satyrnicon.shouldRealTimeRender) {
+      const text = document.getElementById("teacher").value;
+      satyrnicon.renderDocument(text)
+    }
+
+  },
+
+  renderDocument: (text) => {
+    const html  = converter.makeHtml(text);
+    document.querySelector("#markdown").innerHTML = html;
+    document.querySelector("#teacher").innerHTML = text;
+    satyrnicon.initialiseEditors();
   }
+
 };
 
 
