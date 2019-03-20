@@ -17,6 +17,7 @@ import { shell, ipcRenderer, remote, BrowserWindow } from "electron";
 const app = remote.app;
 
 import showdown  from 'showdown';
+import converter from './helpers/converter';
 window.showdown = showdown;
 
 

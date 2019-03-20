@@ -235,9 +235,10 @@ const child_process = __webpack_require__(/*! child_process */ "child_process");
 
 class Kernel {
   constructor(satyrnicon) {
-    this.satyrnicon = satyrnicon;
-    this.nodePath = "/Users/korsimoro/.nvm/versions/node/v8.1.1/bin/node"; //this.nodePath = "/tmp/wrapper"
+    this.satyrnicon = satyrnicon; //this.nodePath = "/Users/korsimoro/.nvm/versions/node/v8.1.1/bin/node"
+    //this.nodePath = "/tmp/wrapper"
 
+    this.nodePath = "node";
     this.proc = undefined;
     this.outputKey = undefined; // https://dzone.com/articles/understanding-execfile-spawn-exec-and-fork-in-node
 
