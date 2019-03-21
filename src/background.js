@@ -62,11 +62,13 @@ app.on("ready", () => {
     // about:blank is opened when creating stand-alone helper windows
     // such as for the About page and the Guide
     if (disposition === "_satyrn") {
-      return true
+      e.preventDefault();
+      mainWindow.send("load-url-new-page", url);
+      return false
     }
     if (disposition === "satyrn") {
       e.preventDefault();
-      mainWindow.loadURL(url);
+      mainWindow.send("load-url-current-page", url);
       return false
     }
     if(url && url !== 'about:blank') {

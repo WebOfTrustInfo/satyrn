@@ -346,8 +346,8 @@ const satyrnicon = {
     editor.setValue(satyrnicon.state[key]);
   },
   resetKernel: () => {
-    if (satyrnicon.kernel) {
-      satyrnicon.kernel.kill();
+    if (satyrnicon.kernel) {// TODO kill is not a function? Seems to work without killing - probably not good!
+      // satyrnicon.kernel.kill()
     }
 
     satyrnicon.kernel = new _kernel__WEBPACK_IMPORTED_MODULE_0__["Kernel"](satyrnicon);

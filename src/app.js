@@ -7,12 +7,6 @@ import "./stylesheets/main.css";
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 
-
-
-// ----------------------------------------------------------------------------
-// Everything below is just to show you how it works. You can delete all of it.
-// ----------------------------------------------------------------------------
-
 import { shell, ipcRenderer, remote, BrowserWindow } from "electron";
 const app = remote.app;
 
@@ -43,6 +37,8 @@ let guideHtml = "";
 //  toggle-render-mode -> flip real time render mode
 //  show-guide -> change the display to the 'guide' page
 //  show-about -> change the display to the 'about' page
+// load-url-current-page -> loads a external markdown file in the current page
+// load-url-new-page -> loads an external markdown file in new window
 ipcRenderer.on('open-file', function (event, arg) {
   fs.readFile( arg[0], function (err, data) {
     if (err) {
@@ -87,6 +83,22 @@ ipcRenderer.on('show-about', (event,args) => {
   show(aboutHtml, 'about');
 });
 
+ipcRenderer.on('load-url-current-page', (event,url) => {
+  let load = (contents) => {
+    // TODO What should the file name be?
+    state.openFile("NEW FILE", contents)
+  }
+  loadUrl(url, load)
+})
+
+ipcRenderer.on('load-url-new-page', (event,url) => {
+  let load = (contents) => {
+    let html = converter.makeHtml(contents);
+    // TODO What Should the target be? Different for each page?
+    show(html, "new")
+  }
+  loadUrl(url, load)
+})
 // --------------------- --------------------- ---------------------
 // action implementations
 // show -> display a styled file like about, guide
@@ -94,6 +106,7 @@ ipcRenderer.on('show-about', (event,args) => {
 // loadAbout -> display the about file
 // loadFile -> instructs main process to use the system file dialog
 //             to load a file
+// loadUrl -> returns contents of http request to a url
 // handleTextChanged -> re-render document on change if real-time rendering
 // renderDocument -> used by open-file to display a document other
 //                   than about and guide, also used during realTime
@@ -127,6 +140,20 @@ function loadAbout() {
 
 function loadFile() {
   ipcRenderer.send('load-file')
+}
+
+function loadUrl(url, execute) {
+  let request = new XMLHttpRequest();
+  request.open('GET', url, true);
+  request.send(null);
+  request.onreadystatechange = () => {
+    if (request.readyState === 4 && request.status === 200) {
+      let type = request.getResponseHeader('Content-Type');
+      if (type.indexOf("text") !== 1) {
+        execute(request.responseText)
+      }
+    }
+  }
 }
 
 

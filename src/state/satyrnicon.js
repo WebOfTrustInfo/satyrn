@@ -35,7 +35,8 @@ const satyrnicon = {
 
   resetKernel: () => {
     if(satyrnicon.kernel) {
-      satyrnicon.kernel.kill()
+      // TODO kill is not a function? Seems to work without killing - probably not good!
+      // satyrnicon.kernel.kill()
     }
     satyrnicon.kernel = new Kernel(satyrnicon)
   },
