@@ -19,10 +19,10 @@ export const helpMenuTemplate = {
 };
 
 function showGuide() {
-  app.mainWindow.send('show-guide');
+  BrowserWindow.getFocusedWindow().send('show-guide');
 }
 
 function showAbout() {
-  app.mainWindow.send('show-about');
+  BrowserWindow.getFocusedWindow().send('show-about');
 }
 
