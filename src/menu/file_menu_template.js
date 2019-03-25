@@ -1,4 +1,4 @@
-import {app, BrowserWindow, dialog} from "electron";
+import {app, BrowserWindow, dialog, remote} from "electron";
 import { setApplicationMenu} from "../background";
 
 var path = require('path');
@@ -55,7 +55,7 @@ export const fileMenuTemplate = {
 };
 
 function toggleRenderMode() {
-  app.mainWindow.send('toggle-render-mode');
+  BrowserWindow.getFocusedWindow().send('toggle-render-mode');
 }
 
 function reloadPage() {
@@ -66,18 +66,18 @@ function reloadPage() {
 
 function toggleEditMode() {
 
-  app.mainWindow.send('toggle-edit-mode');
+  BrowserWindow.getFocusedWindow().send('toggle-edit-mode');
 
 }
 
 function toggleDevelopMode() {
 
-  app.mainWindow.send('toggle-develop-mode');
+  BrowserWindow.getFocusedWindow().send('toggle-develop-mode');
 
 }
 
 function saveFile() {
-  app.mainWindow.send('save-file', null);
+  BrowserWindow.getFocusedWindow().send('save-file', null);
 }
 
 function saveFileAs() {
@@ -97,7 +97,7 @@ function saveFileAs() {
       return;
     }
 
-    app.mainWindow.send('save-file',fileNames);
+    BrowserWindow.getFocusedWindow().send('save-file',fileNames);
   })
 }
 
@@ -119,6 +119,6 @@ function fileOpenDialog() {
             return;
         }
 
-        app.mainWindow.send('open-file',fileNames);
+      BrowserWindow.getFocusedWindow().send('open-file',fileNames);
     })
 }

@@ -36,48 +36,10 @@ if (env.name !== "production") {
 }
 
 app.on("ready", () => {
-  setApplicationMenu();
-
-  const mainWindow = createWindow("main", {
-    width: 1000,
-    height: 600,
-    webPreferences: {
-      nativeWindowOpen: true
-    }
-  });
-  app.mainWindow = mainWindow
-
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "app.html"),
-      protocol: "file:",
-      slashes: true
-    })
-  );
-  // if (env.name === "development") {
-  //   mainWindow.openDevTools();
-  // }
-
-  mainWindow.webContents.on('new-window', function(e, url, disposition) {
-    // about:blank is opened when creating stand-alone helper windows
-    // such as for the About page and the Guide
-    if (disposition === "_satyrn") {
-      e.preventDefault();
-      mainWindow.send("load-url-new-page", url);
-      return false
-    }
-    if (disposition === "satyrn") {
-      e.preventDefault();
-      mainWindow.send("load-url-current-page", url);
-      return false
-    }
-    if(url && url !== 'about:blank') {
-      e.preventDefault();
-      console.log('EXTERNAL')
-       shell.openExternal(url);
-       return false;
-      }
-  });
+  let onReady =  (currentWindow) => {
+    currentWindow.send('open-file',["./default.md"]);
+  };
+  let window = createNewWindow("initial", onReady);
 });
 
 
@@ -90,10 +52,62 @@ app.on("window-all-closed", () => {
 
 const ipc = require('electron').ipcMain
 
-ipc.on('load-file', function (event, arg) {
-  var fileName = dialog.showOpenDialog({ defaultPath:app.getAppPath(), properties: ['openFile', 'openDirectory'] });
-  console.log("OPEN" + fileName)
-  app.mainWindow.send('open-file',fileName);
-})
+// ipc.on('load-file', function (event, arg) {
+//   var fileName = dialog.showOpenDialog({ defaultPath:app.getAppPath(), properties: ['openFile', 'openDirectory'] });
+//   console.log("OPEN" + fileName)
+//   app.initialWindow.send('open-file',fileName);
+// })
+
+function createNewWindow(name, onReady) {
+  setApplicationMenu();
+
+  const window = createWindow(name, {
+    width: 1000,
+    height: 600,
+    webPreferences: {
+      nativeWindowOpen: true
+    }
+  });
+
+  window.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "app.html"),
+      protocol: "file:",
+      slashes: true
+    })
+  );
+
+
+  window.webContents.on('new-window', function(e, url, disposition) {
+    // about:blank is opened when creating stand-alone helper windows
+    // such as for the About page and the Guide
+    if (disposition === "_satyrn") {
+      e.preventDefault();
+      let onReady = (currentWindow) => {
+        currentWindow.send("load-url", url);
+      }
+      createNewWindow(url, onReady);
+
+      return false
+    }
+    if (disposition === "satyrn") {
+      e.preventDefault();
+      window.send("load-url", url);
+      return false
+    }
+    if(url && url !== 'about:blank') {
+      e.preventDefault();
+      console.log('EXTERNAL')
+      shell.openExternal(url);
+      return false;
+    }
+  });
+
+  window.webContents.once('dom-ready', () => {
+    onReady(window);
+  })
+
+  return window;
+}
 
 

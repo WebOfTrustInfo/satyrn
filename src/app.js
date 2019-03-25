@@ -37,13 +37,14 @@ let guideHtml = "";
 //  toggle-render-mode -> flip real time render mode
 //  show-guide -> change the display to the 'guide' page
 //  show-about -> change the display to the 'about' page
-// load-url-current-page -> loads a external markdown file in the current page
-// load-url-new-page -> loads an external markdown file in new window
+// load-url-> loads a external markdown file from url
 ipcRenderer.on('open-file', function (event, arg) {
   fs.readFile( arg[0], function (err, data) {
     if (err) {
       throw err;
     }
+
+    console.log(data);
     state.openFile(arg[0],data)
   });
 });
@@ -83,7 +84,8 @@ ipcRenderer.on('show-about', (event,args) => {
   show(aboutHtml, 'about');
 });
 
-ipcRenderer.on('load-url-current-page', (event,url) => {
+ipcRenderer.on('load-url', (event,url) => {
+  console.log("LOAD" + url)
   let load = (contents) => {
     // TODO What should the file name be?
     state.openFile("NEW FILE", contents)
@@ -91,21 +93,11 @@ ipcRenderer.on('load-url-current-page', (event,url) => {
   loadUrl(url, load)
 })
 
-ipcRenderer.on('load-url-new-page', (event,url) => {
-  let load = (contents) => {
-    let html = converter.makeHtml(contents);
-    // TODO What Should the target be? Different for each page?
-    show(html, "new")
-  }
-  loadUrl(url, load)
-})
 // --------------------- --------------------- ---------------------
 // action implementations
 // show -> display a styled file like about, guide
 // loadGuide - display the guide file
 // loadAbout -> display the about file
-// loadFile -> instructs main process to use the system file dialog
-//             to load a file
 // loadUrl -> returns contents of http request to a url
 // handleTextChanged -> re-render document on change if real-time rendering
 // renderDocument -> used by open-file to display a document other
@@ -138,10 +130,6 @@ function loadAbout() {
   aboutHtml = converter.makeHtml(md);
 }
 
-function loadFile() {
-  ipcRenderer.send('load-file')
-}
-
 function loadUrl(url, execute) {
   let request = new XMLHttpRequest();
   request.open('GET', url, true);
@@ -160,9 +148,9 @@ function loadUrl(url, execute) {
 
 // --------------------- --------------------- ---------------------
 // global access to actions, should we encapsulate as a mutator?
-window.loadFile = loadFile
+// window.loadFile = loadFile
 
 
 // this opens the default file from the browser, rather than from main...
 // we should document our thinking here.
-app.mainWindow.send('open-file',["./default.md"]);
+
