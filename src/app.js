@@ -39,14 +39,7 @@ let guideHtml = "";
 //  show-about -> change the display to the 'about' page
 // load-url-> loads a external markdown file from url
 ipcRenderer.on('open-file', function (event, arg) {
-  fs.readFile( arg[0], function (err, data) {
-    if (err) {
-      throw err;
-    }
-
-    console.log(data);
-    state.openFile(arg[0],data)
-  });
+  loadFile(arg[0]);
 });
 
 ipcRenderer.on('save-file', function(event, arg) {
@@ -85,12 +78,17 @@ ipcRenderer.on('show-about', (event,args) => {
 });
 
 ipcRenderer.on('load-url', (event,url) => {
-  console.log("LOAD" + url)
-  let load = (contents) => {
-    // TODO What should the file name be?
-    state.openFile("NEW FILE", contents)
+
+  loadUrl(url)
+})
+
+ipcRenderer.on('reload-window', (event, reloadContents) => {
+  console.log("RELOAD WINDOW")
+  if (reloadContents.isFile) {
+    loadFile(reloadContents.url)
+  } else {
+    loadUrl(reloadContents.url)
   }
-  loadUrl(url, load)
 })
 
 // --------------------- --------------------- ---------------------
@@ -106,6 +104,15 @@ ipcRenderer.on('load-url', (event,url) => {
 function show(html, target) {
   let w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
 
+  // close the old window so we can open with focus
+  if (w.document.body.innerHTML) {
+  //    console.log(target + ' exists');
+    setTimeout(function () {
+      w.close();
+      show(html, target);
+    }, 100);
+    return;
+  }
 
   w.document.body.innerHTML = "";
   w.document.write(html)
@@ -130,7 +137,18 @@ function loadAbout() {
   aboutHtml = converter.makeHtml(md);
 }
 
-function loadUrl(url, execute) {
+function loadFile(path) {
+  fs.readFile( path, function (err, data) {
+    if (err) {
+      throw err;
+    }
+
+    console.log(data);
+    state.openFile(path,data)
+  });
+}
+
+function loadUrl(url) {
   let request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.send(null);
@@ -138,7 +156,8 @@ function loadUrl(url, execute) {
     if (request.readyState === 4 && request.status === 200) {
       let type = request.getResponseHeader('Content-Type');
       if (type.indexOf("text") !== 1) {
-        execute(request.responseText)
+        state.openFile("NEW FILE", request.responseText)
+
       }
     }
   }
@@ -149,6 +168,13 @@ function loadUrl(url, execute) {
 // --------------------- --------------------- ---------------------
 // global access to actions, should we encapsulate as a mutator?
 // window.loadFile = loadFile
+
+let tid = setInterval( function () {
+  if ( document.readyState !== 'complete' ) return;
+  clearInterval( tid );
+  console.log("WINDOW CHANGED")
+  console.log(window.currentUrl);
+}, 100 );
 
 
 // this opens the default file from the browser, rather than from main...

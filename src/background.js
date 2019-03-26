@@ -37,6 +37,10 @@ if (env.name !== "production") {
 
 app.on("ready", () => {
   let onReady =  (currentWindow) => {
+    currentWindow.reloadContent = {
+      isFile: true,
+      url: "./default.md"
+    };
     currentWindow.send('open-file',["./default.md"]);
   };
   let window = createNewWindow("initial", onReady);
@@ -51,12 +55,6 @@ app.on("window-all-closed", () => {
 
 
 const ipc = require('electron').ipcMain
-
-// ipc.on('load-file', function (event, arg) {
-//   var fileName = dialog.showOpenDialog({ defaultPath:app.getAppPath(), properties: ['openFile', 'openDirectory'] });
-//   console.log("OPEN" + fileName)
-//   app.initialWindow.send('open-file',fileName);
-// })
 
 function createNewWindow(name, onReady) {
   setApplicationMenu();
@@ -77,6 +75,11 @@ function createNewWindow(name, onReady) {
     })
   );
 
+  window.webContents.on('devtools-reload-page', () => {
+    console.log("PAGE RELOAD")
+  })
+
+
 
   window.webContents.on('new-window', function(e, url, disposition) {
     // about:blank is opened when creating stand-alone helper windows
@@ -84,7 +87,12 @@ function createNewWindow(name, onReady) {
     if (disposition === "_satyrn") {
       e.preventDefault();
       let onReady = (currentWindow) => {
+        currentWindow.reloadContent = {
+          isFile: false,
+          url: url
+        };
         currentWindow.send("load-url", url);
+
       }
       createNewWindow(url, onReady);
 

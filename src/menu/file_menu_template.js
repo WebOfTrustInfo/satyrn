@@ -59,8 +59,13 @@ function toggleRenderMode() {
 }
 
 function reloadPage() {
+  let focusedWindow = BrowserWindow.getFocusedWindow();
+  // console.log(BrowserWindow.getFocusedWindow().reloadContent)
   BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
   setApplicationMenu()
+  focusedWindow.webContents.once('dom-ready', () => {
+    focusedWindow.send('reload-window', BrowserWindow.getFocusedWindow().reloadContent);
+  })
 }
 
 
