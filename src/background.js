@@ -75,12 +75,6 @@ function createNewWindow(name, onReady) {
     })
   );
 
-  window.webContents.on('devtools-reload-page', () => {
-    console.log("PAGE RELOAD")
-  })
-
-
-
   window.webContents.on('new-window', function(e, url, disposition) {
     // about:blank is opened when creating stand-alone helper windows
     // such as for the About page and the Guide
@@ -100,6 +94,10 @@ function createNewWindow(name, onReady) {
     }
     if (disposition === "satyrn") {
       e.preventDefault();
+      window.reloadContent = {
+        isFile: false,
+        url: url
+      };
       window.send("load-url", url);
       return false
     }
