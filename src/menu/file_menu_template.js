@@ -1,5 +1,5 @@
 import {app, BrowserWindow, dialog, remote} from "electron";
-import { setApplicationMenu} from "../background";
+import { createMenu} from "../background";
 
 var path = require('path');
 import env from "env";
@@ -61,7 +61,7 @@ function toggleRenderMode() {
 function reloadPage() {
   let focusedWindow = BrowserWindow.getFocusedWindow();
   BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
-  setApplicationMenu()
+  createMenu()
   focusedWindow.webContents.once('dom-ready', () => {
     focusedWindow.send('reload-window', focusedWindow.reloadContent);
   })

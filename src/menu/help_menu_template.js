@@ -1,5 +1,5 @@
 import {app, BrowserWindow, dialog} from "electron";
-import { setApplicationMenu} from "../background";
+import { createMenu} from "../background";
 
 var path = require('path');
 import env from "env";

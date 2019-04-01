@@ -16,13 +16,13 @@ import createWindow from "./helpers/window";
 import env from "env";
 
 
-export const setApplicationMenu = () => {
+export const createMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
   if (env.name !== "production") {
     menus.push(devMenuTemplate);
   }
   menus.push(helpMenuTemplate); // pushed after dev so it is always right-most menu
-  Menu.setApplicationMenu(Menu.buildFromTemplate(menus));
+  return Menu.buildFromTemplate(menus);
 };
 
 // Save userData in separate folders for each environment.
@@ -57,7 +57,7 @@ app.on("window-all-closed", () => {
 const ipc = require('electron').ipcMain
 
 function createNewWindow(name, onReady) {
-  setApplicationMenu();
+  // createMenu();
 
   const window = createWindow(name, {
     width: 1000,
@@ -66,6 +66,8 @@ function createNewWindow(name, onReady) {
       nativeWindowOpen: true
     }
   });
+
+  window.setMenu(createMenu());
 
   window.loadURL(
     url.format({
