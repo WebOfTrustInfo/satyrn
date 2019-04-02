@@ -77,6 +77,12 @@ function createNewWindow(name, onReady) {
     })
   );
 
+  window.webContents.on('devtools-reload-page', () => {
+    window.webContents.once('dom-ready', () => {
+      window.send("load-url", window.reloadContent);
+    });
+  });
+
   window.webContents.on('new-window', function(e, url, disposition) {
     // about:blank is opened when creating stand-alone helper windows
     // such as for the About page and the Guide
@@ -105,7 +111,6 @@ function createNewWindow(name, onReady) {
     }
     if(url && url !== 'about:blank') {
       e.preventDefault();
-      console.log('EXTERNAL')
       shell.openExternal(url);
       return false;
     }

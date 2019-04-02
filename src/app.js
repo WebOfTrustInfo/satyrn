@@ -78,12 +78,10 @@ ipcRenderer.on('show-about', (event,args) => {
 });
 
 ipcRenderer.on('load-url', (event,url) => {
-
   loadUrl(url)
 })
 
 ipcRenderer.on('reload-window', (event, reloadContents) => {
-  console.log("RELOAD WINDOW")
   if (reloadContents.isFile) {
     loadFile(reloadContents.url)
   } else {
@@ -165,16 +163,7 @@ function loadUrl(url) {
 
 
 
-// --------------------- --------------------- ---------------------
-// global access to actions, should we encapsulate as a mutator?
-// window.loadFile = loadFile
 
-let tid = setInterval( function () {
-  if ( document.readyState !== 'complete' ) return;
-  clearInterval( tid );
-  console.log("WINDOW CHANGED")
-  console.log(window.currentUrl);
-}, 100 );
 
 
 // this opens the default file from the browser, rather than from main...

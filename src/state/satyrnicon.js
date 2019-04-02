@@ -43,6 +43,7 @@ const satyrnicon = {
 
   openFile: (fname,data) => {
     satyrnicon.resetKernel();
+    satyrnicon.editors = {};
     satyrnicon.currentFile = fname
 
     const text = data.toString();
