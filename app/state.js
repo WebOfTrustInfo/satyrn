@@ -230,7 +230,9 @@ const converter = new showdown__WEBPACK_IMPORTED_MODULE_0___default.a.Converter(
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Kernel", function() { return Kernel; });
-const child_process = __webpack_require__(/*! child_process */ "child_process"); // This handles the state of a single notebook document.
+const child_process = __webpack_require__(/*! child_process */ "child_process");
+
+const os = __webpack_require__(/*! os */ "os"); // This handles the state of a single notebook document.
 
 
 class Kernel {
@@ -252,7 +254,7 @@ class Kernel {
     this.proc = child;
     const kernel = this;
     child.stdout.on('data', data => {
-      console.log("GOT DATA");
+      console.log("KERNEL.js GOT DATA", String(data, 'UTF-8'));
       if (kernel.outputKey) kernel.satyrnicon.receiveTextOutput(data, kernel.outputKey);else kernel.satyrnicon.receiveUnsolicitedTextOutput(data);
     });
     child.stdout.on('close', () => {
@@ -289,6 +291,7 @@ class Kernel {
     //replace(/\n/g,'\\\\n')
     const escapedCode = code;
     console.log("eval(\"" + escapedCode + "\")");
+    if (code[code.length - 1] != os.EOL) code = code + os.EOL;
     this.proc.stdin.cork();
     const result = this.proc.stdin.write(code);
     console.log("RESULT", result);
@@ -415,6 +418,17 @@ const satyrnicon = {
 /***/ (function(module, exports) {
 
 module.exports = require("child_process");
+
+/***/ }),
+
+/***/ "os":
+/*!*********************!*\
+  !*** external "os" ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("os");
 
 /***/ }),
 

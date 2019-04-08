@@ -1,4 +1,5 @@
 const child_process = require('child_process')
+const os = require('os');
 
 // This handles the state of a single notebook document.
 export class Kernel {
@@ -25,7 +26,7 @@ export class Kernel {
 
     const kernel=this
     child.stdout.on('data', (data) => {
-      console.log("GOT DATA");
+      console.log("KERNEL.js GOT DATA", String(data, 'UTF-8'));
       if(kernel.outputKey)
         kernel.satyrnicon.receiveTextOutput(data,kernel.outputKey)
       else
@@ -78,8 +79,11 @@ export class Kernel {
     const escapedCode = code;
     console.log("eval(\""+escapedCode+"\")")
 
+    if (code[code.length - 1] != os.EOL)
+      code = code + os.EOL;
+    
     this.proc.stdin.cork()
-    const result = this.proc.stdin.write(code)
+    const result = this.proc.stdin.write(code);
     console.log("RESULT",result)
     this.proc.stdin.uncork()
 
