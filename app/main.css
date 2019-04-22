@@ -29,8 +29,10 @@ a {
 
 }
 
-#teacher {
+#teacher-input {
   display: none;
+}
+#teacher {
   height: 95%;
   min-width: 500px;
   flex: 1;

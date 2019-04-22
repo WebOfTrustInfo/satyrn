@@ -33,6 +33,11 @@ const satyrnicon = {
     editor.setValue(satyrnicon.state[key])
   },
 
+  toggleRealTimeRender: () => {
+    satyrnicon.shouldRealTimeRender = !satyrnicon.shouldRealTimeRender;
+    console.log("DONT RENDER", satyrnicon.shouldRealTimeRender)
+
+  },
   resetKernel: () => {
     if(satyrnicon.kernel) {
       // TODO kill is not a function? Seems to work without killing - probably not good!

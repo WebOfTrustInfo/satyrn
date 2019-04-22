@@ -56,7 +56,8 @@ export const fileMenuTemplate = {
 function reloadPage() {
   let focusedWindow = BrowserWindow.getFocusedWindow();
   BrowserWindow.getFocusedWindow().webContents.reloadIgnoringCache();
-  createMenu()
+  focusedWindow.setMenu(createMenu());
+
   focusedWindow.webContents.once('dom-ready', () => {
     focusedWindow.send('reload-window', focusedWindow.reloadContent);
   })

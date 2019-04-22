@@ -83,6 +83,7 @@ function createNewWindow(name, onReady) {
     });
   });
 
+
   window.webContents.on('new-window', function(e, url, disposition) {
     // about:blank is opened when creating stand-alone helper windows
     // such as for the About page and the Guide

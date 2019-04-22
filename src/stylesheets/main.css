@@ -28,9 +28,11 @@ a {
   justify-content: center;
 
 }
-
-#teacher {
+#teacher-input {
   display: none;
+  margin: 20px;
+}
+#teacher {
   height: 95%;
   min-width: 500px;
   flex: 1;

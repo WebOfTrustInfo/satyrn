@@ -7,7 +7,7 @@ import "./stylesheets/main.css";
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 
-import { shell, ipcRenderer, remote, BrowserWindow } from "electron";
+import { shell, ipcRenderer, remote, globalShortcut } from "electron";
 const app = remote.app;
 
 import showdown  from 'showdown';
@@ -58,12 +58,12 @@ ipcRenderer.on('save-file', function(event, arg) {
 });
 
 ipcRenderer.on('toggle-edit-mode', function(event, args) {
-  state.isEditMode ? document.querySelector("#teacher").style.display = "none"  :  document.querySelector("#teacher").style.display = "block";
+  state.isEditMode ? document.querySelector("#teacher-input").style.display = "none"  :  document.querySelector("#teacher-input").style.display = "block";
   state.isEditMode = !state.isEditMode;
 });
 
 ipcRenderer.on('toggle-develop-mode', (event, args) => {
-  state.shouldRealTimeRender = !state.shouldRealTimeRender;
+  // state.shouldRealTimeRender = !state.shouldRealTimeRender;
 });
 
 ipcRenderer.on('show-guide', (event,args) => {
@@ -169,4 +169,5 @@ function loadUrl(url) {
 
 // this opens the default file from the browser, rather than from main...
 // we should document our thinking here.
+
 
