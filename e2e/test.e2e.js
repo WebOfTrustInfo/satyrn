@@ -1,8 +1,5 @@
 import { expect } from "chai";
 import testUtils from "./utils";
-import fs from "fs";
-import converter from '../src/helpers/converter'
-import state from "../src/state/satyrnicon";
 
 describe("application launch", () => {
   beforeEach(testUtils.beforeEach);
@@ -12,12 +9,6 @@ describe("application launch", () => {
     return this.app.client.getWindowCount().then(function (count) {
       expect(count).to.equal(1);
     })
-    // return this.app.browserWindow.then(window => {
-    //   console.log(window);
-    //   // window.isVisible().to.equal(true);
-    //   expect(null).to.equals(null);
-    //
-    // })
   });
 
   it("should render #markdown div on start", function() {

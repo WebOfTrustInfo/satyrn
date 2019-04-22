@@ -24,7 +24,6 @@ export const fileMenuTemplate = {
     },
     {
       label: "Save As",
-      // accelerator: "CmdOrCtrl+O",
       click: saveFileAs
     },
     { type: "separator" },
@@ -53,10 +52,6 @@ export const fileMenuTemplate = {
     },
   ]
 };
-
-function toggleRenderMode() {
-  BrowserWindow.getFocusedWindow().send('toggle-render-mode');
-}
 
 function reloadPage() {
   let focusedWindow = BrowserWindow.getFocusedWindow();

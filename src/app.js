@@ -43,7 +43,7 @@ ipcRenderer.on('open-file', function (event, arg) {
 });
 
 ipcRenderer.on('save-file', function(event, arg) {
-  let fileContent = document.querySelector("#teacher").innerHTML;
+  let fileContent = document.getElementById("teacher").value;
   let fileName = arg ? arg : state.currentFile;
   console.log(fileContent);
   console.log(fileName);
@@ -52,6 +52,7 @@ ipcRenderer.on('save-file', function(event, arg) {
       return console.log(err);
     }
     state.currentFile = fileName;
+    state.renderDocument(fileContent);
     console.log("The file was saved and the name was changed!");
   });
 });
@@ -61,7 +62,7 @@ ipcRenderer.on('toggle-edit-mode', function(event, args) {
   state.isEditMode = !state.isEditMode;
 });
 
-ipcRenderer.on('toggle-render-mode', (event, args) => {
+ipcRenderer.on('toggle-develop-mode', (event, args) => {
   state.shouldRealTimeRender = !state.shouldRealTimeRender;
 });
 

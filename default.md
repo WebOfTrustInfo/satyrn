@@ -1,6 +1,8 @@
 # Satyrn
 A Markdown-based JavaScript sandbox 
 
+This is the test we are we are in trouble develop mode this is the none deve
+
 ```javascript
 console.log('Hello World1!');
 ```
@@ -9,20 +11,22 @@ console.log('Hello World1!');
 console.log('Hello World2!');
 ```
 
+
+
 Source specified targets
-* No target html (open in new browser). &lt;a href="http://blog.joeandrieu.com"&gt; http://blog.joeandrieu.com&lt;/a&gt;
+* No target html (open in new browser). <a href="http://blog.joeandrieu.com"> http://blog.joeandrieu.com</a>
 * No target md (open in new browser). [http://blog.joeandrieu.com](http://blog.joeandrieu.com) 
 * Arbitrary target (open in new browser). 
-&lt;a href="http://blog.joeandrieu.com" target="fancy"&gt; http://blog.joeandrieu.com&lt;/a&gt;
-* _blank target (open in new browser) &lt;a href="https://github.com/WebOfTrustInfo/satyrn" target="_blank"&gt; https://github.com/WebOfTrustInfo/satyrn&lt;/a&gt; 
-* satyrn target (open in current Satyrn) &lt;a href="https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md" target="satyrn"&gt; https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md&lt;/a&gt; 
-* _satyrn target (open in new Satyrn window) &lt;a href="https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md" target="_satyrn"&gt; https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md&lt;/a&gt; 
-* _satyrn target but not a markdown file (open in new Satyrn window) &lt;a href="http://blog.joeandrieu.com" target="_satyrn"&gt; http://blog.joeandrieu.com&lt;/a&gt; 
-* local #fragment url html (just scroll within current document) &lt;a href="#example"&gt;Example&lt;/a&gt; 
+<a href="http://blog.joeandrieu.com" target="fancy"> http://blog.joeandrieu.com</a>
+* _blank target (open in new browser) <a href="https://github.com/WebOfTrustInfo/satyrn" target="_blank"> https://github.com/WebOfTrustInfo/satyrn</a> 
+* satyrn target (open in current Satyrn) <a href="https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md" target="satyrn"> https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md</a> 
+* _satyrn target (open in new Satyrn window) <a href="https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md" target="_satyrn"> https://github.com/WebOfTrustInfo/satyrn/raw/master/README.md</a> 
+* _satyrn target but not a markdown file (open in new Satyrn window) <a href="http://blog.joeandrieu.com" target="_satyrn"> http://blog.joeandrieu.com</a> 
+* local #fragment url html (just scroll within current document) <a href="#example">Example</a> 
 * local #fragment url markdown (just scroll within current document) [Example](#example)]
 
 
-&lt;a name="example"&gt;Example anchor&lt;/a&gt;
+<a name="example">Example anchor</a>
 
 
 Satyrn helps people learn how to use JavaScript. It combines static markdown text with interactive JavaScript blocks. The markdown can be used to teach concepts while the JavaScript blocks can be used to explore the concepts and test comprehansion.
