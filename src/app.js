@@ -63,6 +63,7 @@ ipcRenderer.on('toggle-edit-mode', function(event, args) {
 });
 
 ipcRenderer.on('toggle-develop-mode', (event, args) => {
+  console.log("DEVELOP MODE TOGGLED")
   // state.shouldRealTimeRender = !state.shouldRealTimeRender;
 });
 

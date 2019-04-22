@@ -34,14 +34,6 @@ export const fileMenuTemplate = {
       click: toggleEditMode,
       checked: false
     },
-    {
-      label: "Develop Mode",
-      type: "checkbox",
-      accelerator: "CmdOrCtrl+D",
-      click: toggleDevelopMode,
-      checked: env.name !== "production",
-      visible: env.name !== "production",
-    },
     { type: "separator" },
     {
       label: "Quit",

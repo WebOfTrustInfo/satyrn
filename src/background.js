@@ -14,13 +14,14 @@ import createWindow from "./helpers/window";
 // Special module holding environment variables which you declared
 // in config/env_xxx.json file.
 import env from "env";
+const electronLocalshortcut = require('electron-localshortcut');
 
 
 export const createMenu = () => {
   const menus = [fileMenuTemplate, editMenuTemplate];
-  if (env.name !== "production") {
-    menus.push(devMenuTemplate);
-  }
+  // if (env.name !== "production") {
+  //   menus.push(devMenuTemplate);
+  // }
   menus.push(helpMenuTemplate); // pushed after dev so it is always right-most menu
   return Menu.buildFromTemplate(menus);
 };
@@ -83,6 +84,9 @@ function createNewWindow(name, onReady) {
     });
   });
 
+  electronLocalshortcut.register(window, 'CmdOrCtrl+Shift+J', () => {
+    window.toggleDevTools();
+  });
 
   window.webContents.on('new-window', function(e, url, disposition) {
     // about:blank is opened when creating stand-alone helper windows
