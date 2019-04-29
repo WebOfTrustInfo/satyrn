@@ -103,7 +103,6 @@ ipcRenderer.on('reload-window', (event, reloadContents) => {
 //                   rendering
 function show(html, target) {
   let w = window.open("", target, "toolbar=no,scrollbars=yes,resizable=yes,width=800,height=500");
-  w.setMenu(null);
   // close the old window so we can open with focus
   if (w.document.body.innerHTML) {
   //    console.log(target + ' exists');
