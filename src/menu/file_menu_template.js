@@ -34,6 +34,13 @@ export const fileMenuTemplate = {
       click: toggleEditMode,
       checked: false
     },
+    {
+      label: "Real-time Render",
+      type: "checkbox",
+      accelerator: "CmdOrCtrl+T",
+      click: toggleRealTimeRender,
+      checked: true
+    },
     { type: "separator" },
     {
       label: "Quit",
@@ -62,9 +69,9 @@ function toggleEditMode() {
 
 }
 
-function toggleDevelopMode() {
+function toggleRealTimeRender() {
 
-  BrowserWindow.getFocusedWindow().send('toggle-develop-mode');
+  BrowserWindow.getFocusedWindow().send('toggle-realtime-render');
 
 }
 
@@ -102,7 +109,7 @@ function fileOpenDialog() {
           { name: 'markdown', extensions: ['md'] }
         ]
     };
- 
+
     dialog.showOpenDialog(null, options, (fileNames) => {
 
         // fileNames is an array that contains all the selected

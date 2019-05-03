@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/state/satyrnicon.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/state/state.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -95,7 +95,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _state_satyrnicon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/satyrnicon */ "./src/state/satyrnicon.js");
+/* harmony import */ var _state_state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../state/state */ "./src/state/state.js");
 const showdown = __webpack_require__(/*! showdown */ "showdown");
 
 
@@ -115,8 +115,8 @@ showdown.extension('aceEditor', () => {
       for (var i = 0; i < content.length; ++i) {
         let key = "editor-" + i;
         var pat = '<p>%EDITOR' + i + '% *<\/p>';
-        text = text.replace(new RegExp(pat, 'gi'), _state_satyrnicon__WEBPACK_IMPORTED_MODULE_0__["default"].getEditorHtml(content[i], key));
-        _state_satyrnicon__WEBPACK_IMPORTED_MODULE_0__["default"].editors[key] = null;
+        text = text.replace(new RegExp(pat, 'gi'), _state_state__WEBPACK_IMPORTED_MODULE_0__["default"].getEditorHtml(content[i], key));
+        _state_state__WEBPACK_IMPORTED_MODULE_0__["default"].editors[key] = null;
       } //reset array
 
 
@@ -307,10 +307,10 @@ class Kernel {
 
 /***/ }),
 
-/***/ "./src/state/satyrnicon.js":
-/*!*********************************!*\
-  !*** ./src/state/satyrnicon.js ***!
-  \*********************************/
+/***/ "./src/state/state.js":
+/*!****************************!*\
+  !*** ./src/state/state.js ***!
+  \****************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -321,7 +321,7 @@ __webpack_require__.r(__webpack_exports__);
 
  // This handles the state of a single notebook document.
 
-const satyrnicon = {
+const state = {
   editors: {},
   state: {},
   isEditMode: false,
@@ -329,49 +329,49 @@ const satyrnicon = {
   currentFile: "",
   kernel: undefined,
   initialiseEditors: () => {
-    for (let key in satyrnicon.editors) {
-      satyrnicon.addEditor(key);
+    for (let key in state.editors) {
+      state.addEditor(key);
     }
   },
   getEditor: key => {
-    return satyrnicon.editors[key];
+    return state.editors[key];
   },
   addEditor: key => {
     let editor = ace.edit(key);
     editor.setTheme("ace/theme/twilight");
     editor.session.setMode("ace/mode/javascript");
-    satyrnicon.editors[key] = editor;
-    satyrnicon.state[key] = editor.getValue();
+    state.editors[key] = editor;
+    state.state[key] = editor.getValue();
   },
   reset: key => {
-    let editor = satyrnicon.getEditor(key);
+    let editor = state.getEditor(key);
     document.querySelector("#output-" + key).innerHTML = "";
-    editor.setValue(satyrnicon.state[key]);
+    editor.setValue(state.state[key]);
   },
   toggleRealTimeRender: () => {
-    satyrnicon.shouldRealTimeRender = !satyrnicon.shouldRealTimeRender;
-    console.log("DONT RENDER", satyrnicon.shouldRealTimeRender);
+    state.shouldRealTimeRender = !state.shouldRealTimeRender;
+    state.handleTextChange();
   },
   resetKernel: () => {
-    if (satyrnicon.kernel) {// TODO kill is not a function? Seems to work without killing - probably not good!
-      // satyrnicon.kernel.kill()
+    if (state.kernel) {// TODO kill is not a function? Seems to work without killing - probably not good!
+      // state.kernel.kill()
     }
 
-    satyrnicon.kernel = new _kernel__WEBPACK_IMPORTED_MODULE_0__["Kernel"](satyrnicon);
+    state.kernel = new _kernel__WEBPACK_IMPORTED_MODULE_0__["Kernel"](state);
   },
   openFile: (fname, data) => {
-    satyrnicon.resetKernel();
-    satyrnicon.editors = {};
-    satyrnicon.currentFile = fname;
+    state.resetKernel();
+    state.editors = {};
+    state.currentFile = fname;
     const text = data.toString();
-    satyrnicon.renderDocument(text);
-    satyrnicon.handleTextChange();
+    state.renderDocument(text);
+    state.handleTextChange();
   },
   run: key => {
     document.querySelector("#output-" + key).innerHTML = "....";
-    let editor = satyrnicon.getEditor(key);
+    let editor = state.getEditor(key);
     const code = editor.getValue();
-    satyrnicon.kernel.run(key, code);
+    state.kernel.run(key, code);
     document.querySelector("#output-" + key).innerHTML = "";
   },
   receiveTextOutput: (data, key) => {
@@ -392,25 +392,25 @@ const satyrnicon = {
   },
   reportKernelDeath: () => {
     console.log("Kernel died");
-    satyrnicon.kernel = undefined;
+    state.kernel = undefined;
   },
   getEditorHtml: (content, key) => {
     return "<div class=\"showdown-js-editor\">\n" + "    <div>\n" + "    <i class=\"fas fa-play\" onclick=\"state.run('" + key + "')\" value=\"Run\" ></i>\n" + "    <i class=\"fas fa-redo\" onclick=\"state.reset('" + key + "')\" value=\"Refresh\" ></i>\n" + "    </div>\n" + "\n" + "    <pre id=\"" + key + "\" class=\"editor\">" + content + "    </pre>\n" + "    <pre class='editor-output' id=\"output-" + key + "\">\n" + "    </pre>\n" + "  </div>";
   },
   handleTextChange: () => {
-    if (satyrnicon.shouldRealTimeRender) {
+    if (state.shouldRealTimeRender) {
       const text = document.getElementById("teacher").value;
-      satyrnicon.renderDocument(text);
+      state.renderDocument(text);
     }
   },
   renderDocument: text => {
     const html = _helpers_converter__WEBPACK_IMPORTED_MODULE_1__["default"].makeHtml(text);
     document.querySelector("#markdown").innerHTML = html;
     document.querySelector("#teacher").innerHTML = text;
-    satyrnicon.initialiseEditors();
+    state.initialiseEditors();
   }
 };
-/* harmony default export */ __webpack_exports__["default"] = (satyrnicon);
+/* harmony default export */ __webpack_exports__["default"] = (state);
 
 /***/ }),
 

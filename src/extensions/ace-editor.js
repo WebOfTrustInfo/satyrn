@@ -1,5 +1,5 @@
 const showdown  = require('showdown');
-import state from '../state/satyrnicon';
+import state from '../state/state';
 
 showdown.extension('aceEditor', () => {
   let content = [];

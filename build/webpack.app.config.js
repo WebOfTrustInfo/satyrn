@@ -7,11 +7,12 @@ module.exports = env => {
     entry: {
       background: "./src/background.js",
       app: "./src/app.js",
-      state: "./src/state/satyrnicon.js"
+      state: "./src/state/state.js",
     },
     output: {
       filename: "[name].js",
       path: path.resolve(__dirname, "../app")
     }
-  });
+    },
+ );
 };

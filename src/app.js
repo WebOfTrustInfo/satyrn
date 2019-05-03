@@ -17,7 +17,7 @@ window.showdown = showdown;
 
 // --------------------- --------------------- ---------------------
 // application state
-import state from './state/satyrnicon'
+import state from './state/state'
 window.state = state;
 
 
@@ -25,7 +25,7 @@ window.state = state;
 const aboutFilename = "src/about.md"
 let aboutMd = "";
 let aboutHtml = "";
-const guideFilename = "src/guide.md"
+const guideFilename = "src/tutorial.md"
 let guideMd = "";
 let guideHtml = "";
 
@@ -62,9 +62,8 @@ ipcRenderer.on('toggle-edit-mode', function(event, args) {
   state.isEditMode = !state.isEditMode;
 });
 
-ipcRenderer.on('toggle-develop-mode', (event, args) => {
-  console.log("DEVELOP MODE TOGGLED")
-  // state.shouldRealTimeRender = !state.shouldRealTimeRender;
+ipcRenderer.on('toggle-realtime-render', (event, args) => {
+  state.shouldRealTimeRender = !state.shouldRealTimeRender;
 });
 
 ipcRenderer.on('show-guide', (event,args) => {
@@ -139,7 +138,7 @@ function loadAbout() {
 function loadFile(path) {
   fs.readFile( path, function (err, data) {
     if (err) {
-      throw err;
+      console.error("Unable to load file", err, path);
     }
 
     console.log(data);

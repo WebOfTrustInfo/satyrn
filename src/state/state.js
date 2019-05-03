@@ -2,7 +2,7 @@ import { Kernel } from './kernel'
 import converter from '../helpers/converter';
 
 // This handles the state of a single notebook document.
-const satyrnicon = {
+const state = {
   editors: {},
   state: {},
 
@@ -12,55 +12,54 @@ const satyrnicon = {
   kernel: undefined,
 
   initialiseEditors: () => {
-    for (let key in satyrnicon.editors) {
-      satyrnicon.addEditor(key);
+    for (let key in state.editors) {
+      state.addEditor(key);
     }
   },
   getEditor: (key) => {
-    return satyrnicon.editors[key]
+    return state.editors[key]
   },
   addEditor: (key) => {
     let editor = ace.edit(key);
     editor.setTheme("ace/theme/twilight");
     editor.session.setMode("ace/mode/javascript");
-    satyrnicon.editors[key]=editor;
-    satyrnicon.state[key]=editor.getValue()
+    state.editors[key]=editor;
+    state.state[key]=editor.getValue()
   },
   reset: (key) => {
-    let editor = satyrnicon.getEditor(key);
+    let editor = state.getEditor(key);
     document.querySelector("#output-"+key).innerHTML = "";
 
-    editor.setValue(satyrnicon.state[key])
+    editor.setValue(state.state[key])
   },
 
   toggleRealTimeRender: () => {
-    satyrnicon.shouldRealTimeRender = !satyrnicon.shouldRealTimeRender;
-    console.log("DONT RENDER", satyrnicon.shouldRealTimeRender)
-
+    state.shouldRealTimeRender = !state.shouldRealTimeRender;
+    state.handleTextChange();
   },
   resetKernel: () => {
-    if(satyrnicon.kernel) {
+    if(state.kernel) {
       // TODO kill is not a function? Seems to work without killing - probably not good!
-      // satyrnicon.kernel.kill()
+      // state.kernel.kill()
     }
-    satyrnicon.kernel = new Kernel(satyrnicon)
+    state.kernel = new Kernel(state)
   },
 
   openFile: (fname,data) => {
-    satyrnicon.resetKernel();
-    satyrnicon.editors = {};
-    satyrnicon.currentFile = fname
+    state.resetKernel();
+    state.editors = {};
+    state.currentFile = fname
 
     const text = data.toString();
-    satyrnicon.renderDocument(text)
-    satyrnicon.handleTextChange();
+    state.renderDocument(text);
+    state.handleTextChange();
   },
 
   run: (key) => {
     document.querySelector("#output-"+key).innerHTML = "....";
-    let editor = satyrnicon.getEditor(key);
+    let editor = state.getEditor(key);
     const code = editor.getValue()
-    satyrnicon.kernel.run(key,code)
+    state.kernel.run(key,code)
     document.querySelector("#output-"+key).innerHTML = ""
   },
 
@@ -86,7 +85,7 @@ const satyrnicon = {
 
   reportKernelDeath: () => {
     console.log("Kernel died")
-    satyrnicon.kernel = undefined
+    state.kernel = undefined
   },
 
   getEditorHtml: (content, key) => {
@@ -104,9 +103,9 @@ const satyrnicon = {
   },
 
   handleTextChange: () => {
-    if (satyrnicon.shouldRealTimeRender) {
+    if (state.shouldRealTimeRender) {
       const text = document.getElementById("teacher").value;
-      satyrnicon.renderDocument(text)
+      state.renderDocument(text)
     }
 
   },
@@ -115,10 +114,10 @@ const satyrnicon = {
     const html  = converter.makeHtml(text);
     document.querySelector("#markdown").innerHTML = html;
     document.querySelector("#teacher").innerHTML = text;
-    satyrnicon.initialiseEditors();
+    state.initialiseEditors();
   }
 
 };
 
 
-export default satyrnicon;
+export default state;
