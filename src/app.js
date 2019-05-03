@@ -22,10 +22,10 @@ window.state = state;
 
 
 // cache help and about files
-const aboutFilename = "src/about.md"
+const aboutFilename = "./app/markdown/about.md";
 let aboutMd = "";
 let aboutHtml = "";
-const guideFilename = "src/tutorial.md"
+const guideFilename = "./app/markdown/tutorial.md";
 let guideMd = "";
 let guideHtml = "";
 
