@@ -45,6 +45,7 @@ app.on("ready", () => {
     currentWindow.send('open-file',["./app/markdown/default.md"]);
   };
   let window = createNewWindow("initial", onReady);
+  window.setMenu(createMenu());
 });
 
 
@@ -55,11 +56,7 @@ app.on("window-all-closed", () => {
 
 
 
-const ipc = require('electron').ipcMain
-
-function createNewWindow(name, onReady) {
-  // createMenu();
-
+export function createNewWindow(name, onReady) {
   const window = createWindow(name, {
     width: 1000,
     height: 600,
@@ -68,7 +65,7 @@ function createNewWindow(name, onReady) {
     }
   });
 
-  window.setMenu(createMenu());
+
 
   window.loadURL(
     url.format({
@@ -101,8 +98,8 @@ function createNewWindow(name, onReady) {
         currentWindow.send("load-url", url);
 
       }
-      createNewWindow(url, onReady);
-
+      let newWindow = createNewWindow(url, onReady);
+      newWindow.setMenu(createMenu());
       return false
     }
     if (disposition === "satyrn") {

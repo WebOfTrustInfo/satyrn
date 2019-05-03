@@ -7,11 +7,9 @@ import "./stylesheets/main.css";
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 
-import { shell, ipcRenderer, remote, globalShortcut } from "electron";
-const app = remote.app;
+import { ipcRenderer } from "electron";
 
 import showdown  from 'showdown';
-import converter from './helpers/converter';
 window.showdown = showdown;
 
 
@@ -20,23 +18,12 @@ window.showdown = showdown;
 import state from './state/state'
 window.state = state;
 
-
-// cache help and about files
-const aboutFilename = "./app/markdown/about.md";
-let aboutMd = "";
-let aboutHtml = "";
-const guideFilename = "./app/markdown/tutorial.md";
-let guideMd = "";
-let guideHtml = "";
-
 // --------------------- --------------------- ---------------------
 // respond to events from the main-process
 //  open-file -> load a file, and replace it in the browser
 //  save-file -> write the current document to a file.
 //  toggle-edit-mode -> enable document editing (teacher mode)
-//  toggle-render-mode -> flip real time render mode
-//  show-guide -> change the display to the 'guide' page
-//  show-about -> change the display to the 'about' page
+//  toggle-realtime-render -> flip real time render mode
 // load-url-> loads a external markdown file from url
 ipcRenderer.on('open-file', function (event, arg) {
   loadFile(arg[0]);
@@ -64,18 +51,6 @@ ipcRenderer.on('toggle-edit-mode', function(event, args) {
 
 ipcRenderer.on('toggle-realtime-render', (event, args) => {
   state.shouldRealTimeRender = !state.shouldRealTimeRender;
-});
-
-ipcRenderer.on('show-guide', (event,args) => {
-  if(guideHtml==="")
-    loadGuide();
-  show(guideHtml, 'guide');
-});
-
-ipcRenderer.on('show-about', (event,args) => {
- if(aboutHtml==="")
-    loadAbout();
-  show(aboutHtml, 'about');
 });
 
 ipcRenderer.on('load-url', (event,url) => {
@@ -125,16 +100,6 @@ function show(html, target) {
   w.document.head.appendChild(link);
 }
 
-function loadGuide() {
-  let md = fs.readFileSync(guideFilename, 'UTF-8');
-  guideHtml = converter.makeHtml(md);
-}
-
-function loadAbout() {
-  let md = fs.readFileSync(aboutFilename, 'UTF-8');
-  aboutHtml = converter.makeHtml(md);
-}
-
 function loadFile(path) {
   fs.readFile( path, function (err, data) {
     if (err) {
@@ -160,13 +125,3 @@ function loadUrl(url) {
     }
   }
 }
-
-
-
-
-
-
-// this opens the default file from the browser, rather than from main...
-// we should document our thinking here.
-
-

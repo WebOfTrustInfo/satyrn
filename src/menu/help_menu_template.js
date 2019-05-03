@@ -1,28 +1,33 @@
-import {app, BrowserWindow, dialog} from "electron";
-import { createMenu} from "../background";
+import {app, BrowserWindow} from "electron";
+import {createNewWindow} from "../background";
 
 var path = require('path');
-import env from "env";
 
 export const helpMenuTemplate = {
   label: "Help",
   submenu: [
     {
-      label: "Guide",
-      click: showGuide
+      label: "Tutorial",
+      click: () => showHelpGuide("Tutorial", "./app/markdown/tutorial.md")
     },
     {
       label: "About",
-      click: showAbout
+      click: () => showHelpGuide("About", "./app/markdown/about.md")
     }
   ]
 };
 
-function showGuide() {
-  BrowserWindow.getFocusedWindow().send('show-guide');
+function showHelpGuide(name, url) {
+  let onReady =  (currentWindow) => {
+    currentWindow.reloadContent = {
+      isFile: true,
+      url
+    };
+    currentWindow.send('open-file',[url]);
+  };
+
+  let window = createNewWindow(name,onReady);
+  window.setMenu(null);
 }
 
-function showAbout() {
-  BrowserWindow.getFocusedWindow().send('show-about');
-}
 
