@@ -28,7 +28,8 @@
     "e2e": "mocha temp/e2e.js --require source-map-support/register",
     "test": "npm run unit && npm run e2e",
     "start": "node build/start.js",
-    "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder"
+    "release": "npm test && webpack --config=build/webpack.app.config.js --env=production && electron-builder",
+    "license": "electron-license list --markdown"
   },
   "dependencies": {
     "dialog": "^0.3.1",
@@ -48,6 +49,7 @@
     "css-loader": "^1.0.0",
     "electron": "^2.0.2",
     "electron-builder": "^20.40.2",
+    "electron-license": "^1.0.1",
     "electron-mocha": "^6.0.4",
     "electron-reload": "^1.4.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
