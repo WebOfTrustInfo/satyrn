@@ -13,11 +13,15 @@
     "files": [
       "app/**/*",
       "node_modules/**/*",
-      "package.json"
+      "package.json",
+      "resources/markdown/default.md"
     ],
     "directories": {
       "buildResources": "resources"
     },
+    "extraFiles": [
+      "markdown"
+    ],
     "publish": null
   },
   "scripts": {

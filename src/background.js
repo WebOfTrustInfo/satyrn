@@ -39,9 +39,9 @@ app.on("ready", () => {
   let onReady =  (currentWindow) => {
     currentWindow.reloadContent = {
       isFile: true,
-      url: "./app/markdown/default.md"
+      url: "./markdown/default.md"
     };
-    currentWindow.send('open-file',["./app/markdown/default.md"]);
+    currentWindow.send('open-file',["./markdown/default.md"]);
   };
   let window = createNewWindow("initial", onReady);
   window.setMenu(createMenu());

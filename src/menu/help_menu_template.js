@@ -8,11 +8,11 @@ export const helpMenuTemplate = {
   submenu: [
     {
       label: "Tutorial",
-      click: () => showHelpGuide(tutorialWindow, "Tutorial", "./app/markdown/tutorial.md")
+      click: () => showHelpGuide(tutorialWindow, "Tutorial", "./markdown/tutorial.md")
     },
     {
       label: "About",
-      click: () => showHelpGuide(aboutWindow, "About", "./app/markdown/about.md")
+      click: () => showHelpGuide(aboutWindow, "About", "./markdown/about.md")
     }
   ]
 };
