@@ -4,7 +4,7 @@
   "description": "A markdown interpreter for writing node library tutorials",
   "version": "0.0.0",
   "private": true,
-  "author": "Mr. Gumby <mr.gumby@example.com>",
+  "author": "Joe Andrieu <joe@legreq.com>, Eric Welton <eric@korsimoro.com>, Will Abramson <will.abramson@napier.ac.uk>, Ganesh Annan <gannan@digitalbazaar.com>",
   "copyright": "© 2017, Gumby inc.",
   "homepage": "http://example.com",
   "main": "app/background.js",
