@@ -5,11 +5,6 @@ A Markdown-based JavaScript sandbox
 console.log('Hello World1!');
 ```
 
-```javascript
-console.log('Hello World2!');
-```
-
-
 
 
 
