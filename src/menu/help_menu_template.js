@@ -2,22 +2,27 @@ import {createNewWindow} from "../background";
 
 let aboutWindow = null;
 let tutorialWindow = null;
+let copyrightWindow = null;
 
 export const helpMenuTemplate = {
   label: "Help",
   submenu: [
     {
       label: "Tutorial",
-      click: () => showHelpGuide(tutorialWindow, "Tutorial", "./markdown/tutorial.md")
+      click: () => showHelpMenuWindow(tutorialWindow, "Tutorial", "./markdown/tutorial.md")
     },
     {
       label: "About",
-      click: () => showHelpGuide(aboutWindow, "About", "./markdown/about.md")
+      click: () => showHelpMenuWindow(aboutWindow, "About", "./markdown/about.md")
+    },
+    {
+      label: "Copyright",
+      click: () => showHelpMenuWindow(copyrightWindow, "Copyright", "./license.md")
     }
   ]
 };
 
-function showHelpGuide(helpWindow, name, url) {
+function showHelpMenuWindow(helpWindow, name, url) {
   console.log("HELP WINDOW", helpWindow);
   if (helpWindow) {
     helpWindow.focus()
@@ -25,13 +30,16 @@ function showHelpGuide(helpWindow, name, url) {
     helpWindow = createHelpWindow(name, url);
     helpWindow.on("close", () => {
       helpWindow = null;
-    })
+    });
+    if (name === "About") {
+      aboutWindow = helpWindow;
+    } else if (name === "Tutorial") {
+      tutorialWindow = helpWindow;
+    } else if (name === "Copyright") {
+      copyrightWindow = helpWindow;
+    }
   }
-  if (name === "About") {
-    aboutWindow = helpWindow;
-  } else {
-    tutorialWindow = helpWindow;
-  }
+
 }
 
 function createHelpWindow(name, url) {

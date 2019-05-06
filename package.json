@@ -20,7 +20,8 @@
       "buildResources": "resources"
     },
     "extraFiles": [
-      "markdown"
+      "markdown",
+      "license.md"
     ],
     "publish": null
   },
@@ -33,8 +34,7 @@
     "test": "npm run unit && npm run e2e",
     "start": "node build/start.js",
     "release": "npm test && npm run generate-license && webpack --config=build/webpack.app.config.js --env=production && electron-builder",
-    "license": "electron-license list --markdown",
-    "generate-license": "electron-license list --markdown > markdown/license.md"
+    "generate-license": "electron-license list --markdown > license.md"
   },
   "dependencies": {
     "dialog": "^0.3.1",
