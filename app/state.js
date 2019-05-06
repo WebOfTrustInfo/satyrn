@@ -213,8 +213,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+showdown__WEBPACK_IMPORTED_MODULE_0___default.a.setFlavor('github');
 const converter = new showdown__WEBPACK_IMPORTED_MODULE_0___default.a.Converter({
-  extensions: ['aceEditor', 'mailitoEmail', 'anchorTarget']
+  extensions: ['aceEditor', 'mailitoEmail', 'anchorTarget'],
+  tables: true,
+  simplifiedAutoLink: true,
+  smoothLivePreview: true,
+  tasklists: true,
+  parseImgDimensions: true,
+  strikethrough: true,
+  ghCodeBlocks: true,
+  ghMentions: true,
+  splitAdjacentBlockquotes: true
 });
 /* harmony default export */ __webpack_exports__["default"] = (converter);
 
