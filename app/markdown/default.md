@@ -1,16 +1,10 @@
 # Satyrn
 A Markdown-based JavaScript sandbox 
 
-This is the test we are we are in trouble develop mode this is the none deve
 
 ```javascript
 console.log('Hello World1!');
 ```
-
-```javascript
-console.log('Hello World2!');
-```
-
 
 
 Source specified targets

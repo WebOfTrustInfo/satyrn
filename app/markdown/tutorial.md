@@ -1,4 +1,22 @@
 #Satyrn Help
+
+Satyrn is a standalone educational framework for learning JavaScript. It uses standard markdown files to present both curriculum and interactive sandboxes for entering, editing, and running JavaScript.
+
+```javascript
+console.log('Hello World1!');
+```
+
+# Combine content and interactivity
+Satyrn uses markdown, aka .md files, to present JavaScript lessons. Use the markdown for static content, like this paragraph, and use the JavaScript code sections to present interactive lessons for your readers.
+
+For instance, you can enter your name after the comma in the sandbox below.
+
+```javascript
+console.log('Hello, '); 
+```
+
+Now press the arrow in the upper left of the sandbox to execute the JavaScript.
+
 #A few tricks
 
 ## Links
