@@ -101,6 +101,7 @@ function saveFileAs() {
 }
 
 function fileOpenDialog() {
+  const focusedWindow = BrowserWindow.getFocusedWindow();
     var fileNames;
     const options = {
         title: 'Open a markdown file',
@@ -110,7 +111,7 @@ function fileOpenDialog() {
         ]
     };
 
-    dialog.showOpenDialog(null, options, (fileNames) => {
+    dialog.showOpenDialog(focusedWindow, options, (fileNames) => {
 
         // fileNames is an array that contains all the selected
         if(fileNames === undefined){
@@ -118,6 +119,6 @@ function fileOpenDialog() {
             return;
         }
 
-      BrowserWindow.getFocusedWindow().send('open-file',fileNames);
+      focusedWindow.send('open-file',fileNames);
     })
 }

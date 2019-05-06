@@ -26,6 +26,7 @@ window.state = state;
 //  toggle-realtime-render -> flip real time render mode
 // load-url-> loads a external markdown file from url
 ipcRenderer.on('open-file', function (event, arg) {
+  console.log("OPEN FILE")
   loadFile(arg[0]);
 });
 
