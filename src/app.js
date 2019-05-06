@@ -37,7 +37,7 @@ ipcRenderer.on('save-file', function(event, arg) {
   console.log(fileName);
   fs.writeFile(fileName, fileContent, function(err) {
     if(err) {
-      return console.log(err);
+      return alert(err);
     }
     state.currentFile = fileName;
     state.renderDocument(fileContent);
@@ -104,7 +104,7 @@ function show(html, target) {
 function loadFile(path) {
   fs.readFile( path, function (err, data) {
     if (err) {
-      console.error("Unable to load file", err, path);
+      alert("Unable to load file " + path);
     }
 
     console.log(data);
