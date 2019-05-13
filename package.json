@@ -23,7 +23,10 @@
       "markdown",
       "license.md"
     ],
-    "publish": null
+    "publish": null,
+    "win": {
+      "target": "zip"
+    }
   },
   "scripts": {
     "postinstall": "electron-builder install-app-deps",
