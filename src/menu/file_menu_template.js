@@ -88,7 +88,8 @@ function saveFileAs() {
       { name: 'markdown', extensions: ['md'] }
     ]
   };
-  dialog.showSaveDialog(null, options, (fileNames) => {
+  const focussedWindow = BrowserWindow.getFocusedWindow()
+  dialog.showSaveDialog(focussedWindow, options, (fileNames) => {
 
     // fileNames is an array that contains all the selected
     if(fileNames === undefined){
@@ -96,7 +97,7 @@ function saveFileAs() {
       return;
     }
 
-    BrowserWindow.getFocusedWindow().send('save-file',fileNames);
+    focussedWindow.send('save-file',fileNames);
   })
 }
 
