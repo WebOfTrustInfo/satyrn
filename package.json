@@ -21,11 +21,13 @@
     },
     "extraFiles": [
       "markdown",
-      "license.md"
+      "license.md",
+      "logos/**/*"
     ],
     "publish": null,
     "win": {
-      "target": "zip"
+      "target": "zip",
+      "icon" : "logos/favicon/Favicon.ico"
     }
   },
   "scripts": {
