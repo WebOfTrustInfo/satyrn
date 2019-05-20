@@ -64,6 +64,7 @@ const state = {
   },
 
   receiveTextOutput: (data,key) => {
+    console.log("RECIEVE ", data)
     const current = document.querySelector("#output-"+key).innerHTML
     const replacement = current + data
     document.querySelector("#output-"+key).innerHTML = replacement

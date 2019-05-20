@@ -280,6 +280,7 @@ class Kernel {
       console.log("READABLE");
     });
     child.stderr.on('data', data => {
+      console.log("ERROR");
       if (kernel.outputKey) kernel.satyrnicon.receiveTextError(data, kernel.outputKey);else kernel.satyrnicon.receiveUnsolicitedTextError(data);
     }); // not sure if we want to handle this differently
 
@@ -304,8 +305,8 @@ class Kernel {
     if (code[code.length - 1] != os.EOL) code = code + os.EOL;
     this.proc.stdin.cork();
     const result = this.proc.stdin.write(code);
-    console.log("RESULT", result);
     this.proc.stdin.uncork();
+    console.log("RUN CODE");
     this.outputKey = key;
   }
 
@@ -385,6 +386,7 @@ const state = {
     document.querySelector("#output-" + key).innerHTML = "";
   },
   receiveTextOutput: (data, key) => {
+    console.log("RECIEVE ", data);
     const current = document.querySelector("#output-" + key).innerHTML;
     const replacement = current + data;
     document.querySelector("#output-" + key).innerHTML = replacement;

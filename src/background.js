@@ -60,23 +60,31 @@ export function createNewWindow(name, onReady) {
     width: 1000,
     height: 600,
     webPreferences: {
-      nativeWindowOpen: true
+      nativeWindowOpen: true,
+      nodeIntegration: true
+
     }
   });
 
+  const defaultUrl = url.format({
+    pathname: path.join(__dirname, "app.html"),
+    protocol: "file:",
+    slashes: true
+  })
 
 
   window.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "app.html"),
-      protocol: "file:",
-      slashes: true
-    })
+    defaultUrl
   );
+
+  window.reloadContent = {
+    isFile: false,
+    defaultUrl
+  }
 
   window.webContents.on('devtools-reload-page', () => {
     window.webContents.once('dom-ready', () => {
-      window.send("load-url", window.reloadContent);
+      window.send("reload-window", window.reloadContent);
     });
   });
 
