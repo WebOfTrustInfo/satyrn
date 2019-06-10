@@ -13,8 +13,7 @@
     "files": [
       "app/**/*",
       "node_modules/**/*",
-      "package.json",
-      "resources/markdown/default.md"
+      "package.json"
     ],
     "directories": {
       "buildResources": "resources"
@@ -31,6 +30,10 @@
     },
     "linux": {
       "target": "tar.gz",
+      "icon": "logos/favicon/Favicon.ico"
+    },
+    "mac": {
+      "target": "dmg",
       "icon": "logos/favicon/Favicon.ico"
     }
   },
