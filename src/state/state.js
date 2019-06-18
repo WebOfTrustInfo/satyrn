@@ -71,7 +71,7 @@ const state = {
   },
 
   receiveUnsolicitedTextOutput: (data) => {
-    console.log(data)
+    console.log('UNSOLICITED:', data);
   },
 
   receiveTextError: (data,key) => {
@@ -81,8 +81,29 @@ const state = {
   },
 
   receiveUnsolicitedTextError: (data) => {
-    console.log(data)
+    console.log('UNSOLICITED ERROR', data.toString('utf-8'));
   },
+
+  receiveStdOut: (key, data.args) => {
+    const current = document.querySelector("#output-"+key).innerHTML
+    const replacement = current + data
+    document.querySelector("#output-"+key).innerHTML = replacement
+}
+receiveException: (key, data.exception)=> {
+  const current = document.querySelector("#output-"+key).innerHTML
+  const replacement = current + '\nEXCEPTION THROWN:\n'  + data
+  document.querySelector("#output-"+key).innerHTML = replacement
+}
+receiveResult: (key, data.result) => {
+  const current = document.querySelector("#output-"+key).innerHTML
+  const replacement = current + '\nRESULT:\n'  + data
+  document.querySelector("#output-"+key).innerHTML = replacement
+}
+receiveUnknownTypedOutput: (key, type, output) => {
+  const current = document.querySelector("#output-"+key).innerHTML
+  const replacement = current + '\nUNKNOWN TYPE from KERNEL: '+\n'  + data
+  document.querySelector("#output-"+key).innerHTML = replacement
+}
 
   reportKernelDeath: () => {
     console.log("Kernel died")

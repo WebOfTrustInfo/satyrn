@@ -14,9 +14,10 @@ export class Kernel {
 
     // https://dzone.com/articles/understanding-execfile-spawn-exec-and-fork-in-node
     const options = {}
-    const child = child_process.spawn(this.nodePath,['-i'],options)
+    //const child = child_process.spawn(this.nodePath,['-i'],options)
     //const child = child_process.fork('./test.js',{silent:true})
-    console.log("FORKED:",child)
+    const child = child_process.fork('src/state/_kernel.js',{silent:true});
+    console.log("FORKED:",child.pid)
 
     child.stdin._writableState.highWaterMark = 0
     child.stdout._readableState.highWaterMark = 1
@@ -26,11 +27,25 @@ export class Kernel {
 
     const kernel=this
     child.stdout.on('data', (data) => {
-      console.log("KERNEL.js GOT DATA", String(data, 'UTF-8'));
-      if(kernel.outputKey)
-        kernel.satyrnicon.receiveTextOutput(data,kernel.outputKey)
-      else
-        kernel.satyrnicon.receiveUnsolicitedTextOutput(data)
+      let d = String(data, 'UTF-8');
+      console.log("KERNEL.js GOT DATA", d);
+
+      if (!('type' in data))
+        return kernel.satyrnicon.receiveUnsolicitedTextOutput(String(data, 'UTF-8'));
+
+      switch (data.type) {
+        case 'console':
+          return kernel.satyrnicon.receiveStdOut(data.key, data.args);
+          break;
+        case 'exception':
+          return kernel.satyrnicon.receiveException(data.key, data.exception);
+          break;
+        case 'result':
+            return kernel.satyrnicon.receiveResult(data.key, data.result);
+          break;
+        default:
+            return kernel.satyrnicon.receiveUnknownTypedOutput(data.key, data.type,String(data, 'UTF-8'));
+      }
     });
 
     child.stdout.on('close', () => {
@@ -65,8 +80,14 @@ export class Kernel {
       console.log("FAILED TO START",error)
     });
 
-  }
 
+    // TODO - what to do?
+    child.on('message', (msg,handle) => {
+      console.log("MESSAGE",msg)
+    });
+
+
+  }
 
   run(key,code) {
     //const escapedCode = code.
@@ -74,17 +95,42 @@ export class Kernel {
       //replace(/\n/g,'\\\\n')
 
     const escapedCode = code;
-    console.log("eval(\""+escapedCode+"\")")
+//    console.log("eval(\""+escapedCode+"\")")
 
     if (code[code.length - 1] != os.EOL)
       code = code + os.EOL;
+    
+    // this.proc.stdin.cork()
+    // const result = this.proc.stdin.write(code);
+    // console.log("RESULT",result)
+    // this.proc.stdin.uncork()
 
-    this.proc.stdin.cork()
-    const result = this.proc.stdin.write(code);
-    this.proc.stdin.uncork()
-    console.log("RUN CODE")
-    this.outputKey = key
+    const runPackage = {
+      cmd:'RUN',
+      key: key,
+      code: code
+    }
+    var result = this.proc.send(runPackage);
+
+//    this.outputKey = key
   }
+  // run(key,code) {
+  //   //const escapedCode = code.
+  //     //replace(/"/g, '\\"')
+  //     //replace(/\n/g,'\\\\n')
+
+  //   const escapedCode = code;
+  //   console.log("eval(\""+escapedCode+"\")")
+
+  //   if (code[code.length - 1] != os.EOL)
+  //     code = code + os.EOL;
+
+  //   this.proc.stdin.cork()
+  //   const result = this.proc.stdin.write(code);
+  //   this.proc.stdin.uncork()
+  //   console.log("RUN CODE")
+  //   this.outputKey = key
+  // }
 
   quit() {
     this.proc.kill()
