@@ -102,12 +102,12 @@ function show(html, target) {
 }
 
 function loadFile(path) {
-  fs.readFile( path, function (err, data) {
+  fs.readFile( path, 'utf8', function (err, data) {
     if (err) {
       alert("Unable to load file " + path);
     }
 
-    console.log(data);
+//    console.log(data);
     state.openFile(path,data)
   });
 }
