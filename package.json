@@ -20,8 +20,7 @@
     },
     "extraFiles": [
       "markdown",
-      "license.md",
-      "logos/**/*"
+      "license.md"
     ],
     "publish": null,
     "win": {
@@ -55,7 +54,9 @@
     "html-loader": "^0.5.5",
     "markdown-loader": "^5.0.0",
     "path": "^0.12.7",
-    "showdown": "^1.9.0"
+    "showdown": "^1.9.0",
+    "electron-reload": "^1.4.0"
+
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.54",
@@ -68,7 +69,6 @@
     "electron-builder": "^20.40.2",
     "electron-license": "^1.0.1",
     "electron-mocha": "^8.0.2",
-    "electron-reload": "^1.4.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "mocha": "^5.2.0",
     "source-map-support": "^0.5.6",

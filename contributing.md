@@ -27,6 +27,15 @@ App.js has access to the application state under src/state/state.js. This contai
 
 The key functionality of this file is to create new Windows and register the appropriate listeners for these windows.
 
+All application windows are created using the createNewWindow() function. This generates a new BrowserWindow and loads the app.html which contains scripts for app.js and state.js enabling all satyrn functionality to work in all the windows.
+
+A BrowserWindow has a number of listeners attached to them:
+* *Reload* - Each BrowserWindow stores the state of it's last loaded page in window.reloadContent. On a reload event, this reload content is used to repopulate the page.
+* *New Window* - A window.webcontents.on('new-window) event is fired every time a user creates a new window. New windows can be categorised as:
+  * Same window. This occurs when target="_satyrn" is used in a href link. The application then overwrites the reloadContent of the current window and opens that page. This is expected to be a markdown file.
+  * New Window. Defined with target="satyrn" Again opens a satyrn application, a markdown, but in a new window.
+  * Menu Pages. These are under the help menu. Here each menu item needs to open a new window once, if the specific page is already open in a window then the page should just be focussed.
+
 
 ## Testing
 

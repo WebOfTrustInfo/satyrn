@@ -2,7 +2,6 @@
 // app starts. It runs through entire life of your application.
 // It doesn't have any windows which you can see on screen, but we can open
 // window from here.
-
 import path from "path";
 import url from "url";
 import {app, Menu, shell} from "electron";
@@ -62,7 +61,6 @@ export function createNewWindow(name, onReady) {
     webPreferences: {
       nativeWindowOpen: true,
       nodeIntegration: true
-
     }
   });
 
@@ -77,6 +75,7 @@ export function createNewWindow(name, onReady) {
     defaultUrl
   );
 
+  // Store Relaod Content, either a file or a external URL
   window.reloadContent = {
     isFile: false,
     defaultUrl
