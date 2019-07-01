@@ -9,6 +9,7 @@
 | electron-license                            | https://github.com/mongodb-js/electron-license                                                | Apache         |
 | es6-templates                               | https://github.com/esnext/es6-templates                                                       | Apache         |
 | forever-agent                               | https://github.com/mikeal/forever-agent                                                       | Apache         |
+| node-environment-flags                      | https://github.com/boneskull/node-environment-flags                                           | Apache         |
 | oauth-sign                                  | https://github.com/mikeal/oauth-sign                                                          | Apache         |
 | request                                     | https://github.com/request/request                                                            | Apache         |
 | rx-lite-aggregates                          | https://github.com/Reactive-Extensions/RxJS                                                   | Apache         |
@@ -33,6 +34,7 @@
 | estraverse                                  | https://github.com/estools/estraverse                                                         | BSD            |
 | esutils                                     | https://github.com/estools/esutils                                                            | BSD            |
 | extract-zip                                 | https://github.com/maxogden/extract-zip                                                       | BSD            |
+| flat                                        | https://github.com/hughsk/flat                                                                | BSD            |
 | ieee754                                     | https://github.com/feross/ieee754                                                             | BSD            |
 | mississippi                                 | https://github.com/maxogden/mississippi                                                       | BSD            |
 | ndjson                                      | https://github.com/maxogden/ndjson                                                            | BSD            |
@@ -141,6 +143,7 @@
 | ajv-errors                                  | https://github.com/epoberezkin/ajv-errors                                                     | MIT            |
 | ajv-keywords                                | https://github.com/epoberezkin/ajv-keywords                                                   | MIT            |
 | ajv                                         | https://github.com/epoberezkin/ajv                                                            | MIT            |
+| ansi-colors                                 | https://github.com/doowb/ansi-colors                                                          | MIT            |
 | ansi-escapes                                | https://github.com/sindresorhus/ansi-escapes                                                  | MIT            |
 | ansi-regex                                  | https://github.com/chalk/ansi-regex                                                           | MIT            |
 | ansi-styles                                 | https://github.com/chalk/ansi-styles                                                          | MIT            |
@@ -297,7 +300,6 @@
 | error-stack-parser                          | https://github.com/stacktracejs/error-stack-parser                                            | MIT            |
 | es-abstract                                 | https://github.com/ljharb/es-abstract                                                         | MIT            |
 | es-to-primitive                             | https://github.com/ljharb/es-to-primitive                                                     | MIT            |
-| es6-promise                                 | https://github.com/stefanpenner/es6-promise                                                   | MIT            |
 | escape-string-regexp                        | https://github.com/sindresorhus/escape-string-regexp                                          | MIT            |
 | event-stream                                | https://github.com/dominictarr/event-stream                                                   | MIT            |
 | events                                      | https://github.com/Gozala/events                                                              | MIT            |
@@ -358,7 +360,6 @@
 | hash.js                                     | https://github.com/indutny/hash.js                                                            | MIT            |
 | he                                          | https://github.com/mathiasbynens/he                                                           | MIT            |
 | hmac-drbg                                   | https://github.com/indutny/hmac-drbg                                                          | MIT            |
-| home-path                                   | https://github.com/75lb/home-path                                                             | MIT            |
 | homedir-polyfill                            | https://github.com/doowb/homedir-polyfill                                                     | MIT            |
 | html-loader                                 | https://github.com/webpack-contrib/html-loader                                                | MIT            |
 | html-minifier                               | https://github.com/kangax/html-minifier                                                       | MIT            |
@@ -422,7 +423,6 @@
 | keyboardevent-from-electron-accelerator     | https://github.com/parro-it/keyboardevent-from-electron-accelerator                           | MIT            |
 | keyboardevents-areequal                     | https://github.com/parro-it/keyboardevents-areequal                                           | MIT            |
 | kind-of                                     | https://github.com/jonschlinkert/kind-of                                                      | MIT            |
-| klaw                                        | https://github.com/jprichardson/node-klaw                                                     | MIT            |
 | latest-version                              | https://github.com/sindresorhus/latest-version                                                | MIT            |
 | lazy-val                                    | https://github.com/develar/lazy-val                                                           | MIT            |
 | lazystream                                  | https://github.com/jpommerening/node-lazystream                                               | MIT            |
@@ -432,6 +432,7 @@
 | loader-utils                                | https://github.com/webpack/loader-utils                                                       | MIT            |
 | locate-path                                 | https://github.com/sindresorhus/locate-path                                                   | MIT            |
 | lodash                                      | https://github.com/lodash/lodash                                                              | MIT            |
+| log-symbols                                 | https://github.com/sindresorhus/log-symbols                                                   | MIT            |
 | loose-envify                                | https://github.com/zertosh/loose-envify                                                       | MIT            |
 | loud-rejection                              | https://github.com/sindresorhus/loud-rejection                                                | MIT            |
 | lower-case                                  | https://github.com/blakeembrey/lower-case                                                     | MIT            |
@@ -480,6 +481,7 @@
 | object-copy                                 | https://github.com/jonschlinkert/object-copy                                                  | MIT            |
 | object-keys                                 | https://github.com/ljharb/object-keys                                                         | MIT            |
 | object-visit                                | https://github.com/jonschlinkert/object-visit                                                 | MIT            |
+| object.assign                               | https://github.com/ljharb/object.assign                                                       | MIT            |
 | object.getownpropertydescriptors            | https://github.com/ljharb/object.getownpropertydescriptors                                    | MIT            |
 | object.pick                                 | https://github.com/jonschlinkert/object.pick                                                  | MIT            |
 | onetime                                     | https://github.com/sindresorhus/onetime                                                       | MIT            |
@@ -674,6 +676,7 @@
 | xdg-basedir                                 | https://github.com/sindresorhus/xdg-basedir                                                   | MIT            |
 | xmlbuilder                                  | https://github.com/oozcitak/xmlbuilder-js                                                     | MIT            |
 | xtend                                       | https://github.com/Raynos/xtend                                                               | MIT            |
+| yargs-unparser                              | https://github.com/yargs/yargs-unparser                                                       | MIT            |
 | yargs                                       | https://github.com/yargs/yargs                                                                | MIT            |
 | yauzl                                       | https://github.com/thejoshwolfe/yauzl                                                         | MIT            |
 | zip-stream                                  | https://github.com/archiverjs/node-zip-stream                                                 | MIT            |

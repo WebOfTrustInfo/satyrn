@@ -276,9 +276,6 @@ class Kernel {
     child.stdout.on('error', () => {
       console.log("ERROR");
     });
-    child.stdout.on('readable', () => {
-      console.log("READABLE");
-    });
     child.stderr.on('data', data => {
       console.log("ERROR");
       if (kernel.outputKey) kernel.satyrnicon.receiveTextError(data, kernel.outputKey);else kernel.satyrnicon.receiveUnsolicitedTextError(data);
