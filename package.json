@@ -25,15 +25,12 @@
     "publish": null,
     "win": {
       "target": "zip",
-      "icon": "logos/favicon/Favicon.ico"
     },
     "linux": {
       "target": "tar.gz",
-      "icon": "logos/favicon/Favicon.ico"
     },
     "mac": {
       "target": "dmg",
-      "icon": "logos/favicon/Favicon.ico"
     }
   },
   "scripts": {
