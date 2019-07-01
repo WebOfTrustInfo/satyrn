@@ -24,13 +24,13 @@
     ],
     "publish": null,
     "win": {
-      "target": "zip",
+      "target": "zip"
     },
     "linux": {
-      "target": "tar.gz",
+      "target": "tar.gz"
     },
     "mac": {
-      "target": "dmg",
+      "target": "dmg"
     }
   },
   "scripts": {
