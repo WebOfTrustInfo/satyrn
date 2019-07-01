@@ -6,6 +6,7 @@ Educators and curriculum creators use markdown for educational material, and Sat
 
 # First Example
 We can introduce the canonical Hello World application with a bit of static text (this paragraph), then use a code block to display sample code:
+
 ```javascript
 console.log('Hello World1!');
 ```
@@ -28,6 +29,7 @@ To simplify breaking a tutorial down into small steps, all of the code blocks on
 A typical scenario would be to create a set of variables, perform various operations, and print the results out through stdout or the console log. 
 
 For example, let's evolve Hello World to use a variable.
+
 ```javascript
 var a = 'Hello';
 ```
@@ -35,11 +37,13 @@ var a = 'Hello';
 If you run this code block, you won't see much visually, but behind the scenes, the variable "a" is set to the string 'Hello!', perhaps the most common operation in JavaScript.
 
 Now you can use the variable in another code block:
+
 ```javascript
 console.log(a);
 ```
 
 You can even change the value
+
 ```javascript
 a += ' World';
 ```
