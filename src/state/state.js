@@ -74,7 +74,7 @@ const state = {
     console.log('UNSOLICITED:', data);
   },
 
-  receiveTextError: (data,key) => {
+  receiveTextError: (data, key) => {
     const current = document.querySelector("#output-"+key).innerHTML
     const replacement = current + data
     document.querySelector("#output-"+key).innerHTML = replacement
@@ -84,9 +84,9 @@ const state = {
     console.log('UNSOLICITED ERROR', data.toString('utf-8'));
   },
 
-  receiveStdOut: (key, data.args) => {
+  receiveStdOut: (key, args) => {
     const current = document.querySelector("#output-"+key).innerHTML
-    const replacement = current + data
+    const replacement = current + args
     document.querySelector("#output-"+key).innerHTML = replacement
 }
 receiveException: (key, data.exception)=> {
