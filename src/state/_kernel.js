@@ -5,6 +5,14 @@
 const KEEP_ALIVE_INTERVAL = 5000;
 const log = console.log; // save this so we can restore it later if we need it
 const os = require('os');
+const SES = require('ses');
+
+const sesOptions = {
+    consoleMode: 'allow', errorStackMode: 'allow'
+};
+
+const domain = SES.makeSESRootRealm(sesOptions);
+
 process.on('message', processMessage);
 
 
