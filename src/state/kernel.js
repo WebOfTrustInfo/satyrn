@@ -4,8 +4,8 @@ const os = require('os');
 // This handles the state of a single notebook document.
 export class Kernel {
 
-  constructor(satyrnicon) {
-    this.satyrnicon = satyrnicon
+  constructor(state) {
+    this.state = state
     //this.nodePath = "/Users/korsimoro/.nvm/versions/node/v8.1.1/bin/node"
     //this.nodePath = "/tmp/wrapper"
     this.nodePath = "node"
@@ -28,9 +28,9 @@ export class Kernel {
     child.stdout.on('data', (data) => {
       console.log("KERNEL.js GOT DATA", String(data, 'UTF-8'));
       if(kernel.outputKey)
-        kernel.satyrnicon.receiveTextOutput(data,kernel.outputKey)
+        kernel.state.receiveTextOutput(data,kernel.outputKey)
       else
-        kernel.satyrnicon.receiveUnsolicitedTextOutput(data)
+        kernel.state.receiveUnsolicitedTextOutput(data)
     });
 
     child.stdout.on('close', () => {
@@ -46,18 +46,18 @@ export class Kernel {
     child.stderr.on('data', (data) => {
       console.log("ERROR")
       if(kernel.outputKey)
-        kernel.satyrnicon.receiveTextError(data,kernel.outputKey)
+        kernel.state.receiveTextError(data,kernel.outputKey)
       else
-        kernel.satyrnicon.receiveUnsolicitedTextError(data)
+        kernel.state.receiveUnsolicitedTextError(data)
     });
 
     // not sure if we want to handle this differently
     child.on('exit', (code,signal) => {
-      kernel.satyrnicon.reportKernelDeath()
+      kernel.state.reportKernelDeath()
     });
 
     child.on('close', (code,signal) => {
-      kernel.satyrnicon.reportKernelDeath()
+      kernel.state.reportKernelDeath()
     });
 
     // TODO - what to do?

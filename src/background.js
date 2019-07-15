@@ -4,7 +4,7 @@
 // window from here.
 import path from "path";
 import url from "url";
-import {app, Menu, shell} from "electron";
+import {app, Menu, ipcMain, shell, BrowserWindow} from "electron";
 import { editMenuTemplate } from "./menu/edit_menu_template";
 import { fileMenuTemplate } from "./menu/file_menu_template";
 import { helpMenuTemplate } from "./menu/help_menu_template";
@@ -130,5 +130,10 @@ export function createNewWindow(name, onReady) {
 
   return window;
 }
+
+ipcMain.on('set-reload-content', (event, reloadContent) => {
+  let focusedWindow = BrowserWindow.getFocusedWindow()
+  focusedWindow.reloadContent = reloadContent
+})
 
 

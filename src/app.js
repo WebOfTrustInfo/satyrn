@@ -7,7 +7,7 @@ import "./stylesheets/main.css";
 import "./helpers/context_menu.js";
 import "./helpers/external_links.js";
 
-import { ipcRenderer } from "electron";
+import { ipcRenderer, BrowserWindow } from "electron";
 
 import showdown  from 'showdown';
 window.showdown = showdown;
@@ -27,21 +27,37 @@ window.state = state;
 // load-url-> loads a external markdown file from url
 ipcRenderer.on('open-file', function (event, arg) {
   console.log("OPEN FILE")
+
+
   loadFile(arg[0]);
+  setTimeout(function () {
+    event.sender.send("set-reload-content", {
+      isFile: true,
+      url: arg[0]
+    })
+  }, 1000);
+
 });
 
 ipcRenderer.on('save-file', function(event, arg) {
   let fileContent = document.getElementById("teacher").value;
   let fileName = arg ? arg : state.currentFile;
-  console.log(fileContent);
-  console.log(fileName);
+  console.log("SAVE", fileName, fileContent);
   fs.writeFile(fileName, fileContent, function(err) {
     if(err) {
       return alert(err);
     }
     state.currentFile = fileName;
+    console.log("SET RELOAD")
+
+
     state.renderDocument(fileContent);
     console.log("The file was saved and the name was changed!");
+    event.sender.send("set-reload-content", {
+      isFile: true,
+      url: fileName
+    })
+
   });
 });
 
@@ -102,6 +118,7 @@ function show(html, target) {
 }
 
 function loadFile(path) {
+  console.log("LOAD", window.reloadContent)
   fs.readFile( path, function (err, data) {
     if (err) {
       alert("Unable to load file " + path);
@@ -109,7 +126,7 @@ function loadFile(path) {
 
     console.log(data);
     state.openFile(path,data)
-  });
+  })
 }
 
 function loadUrl(url) {
