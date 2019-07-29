@@ -76,6 +76,7 @@ function toggleRealTimeRender() {
 }
 
 function saveFile() {
+
   BrowserWindow.getFocusedWindow().send('save-file', null);
 }
 
@@ -88,8 +89,8 @@ function saveFileAs() {
       { name: 'markdown', extensions: ['md'] }
     ]
   };
-  const focussedWindow = BrowserWindow.getFocusedWindow()
-  dialog.showSaveDialog(focussedWindow, options, (fileNames) => {
+  const focusedWindow = BrowserWindow.getFocusedWindow()
+  dialog.showSaveDialog(focusedWindow, options, (fileNames) => {
 
     // fileNames is an array that contains all the selected
     if(fileNames === undefined){
@@ -97,7 +98,8 @@ function saveFileAs() {
       return;
     }
 
-    focussedWindow.send('save-file',fileNames);
+    focusedWindow.send('save-file',fileNames);
+    focusedWindow.reloadContent()
   })
 }
 
@@ -121,5 +123,9 @@ function fileOpenDialog() {
         }
 
       focusedWindow.send('open-file',fileNames);
+      focusedWindow.reloadContent = {
+        isFile: true,
+        url: fileNames[0]
+      }
     })
 }

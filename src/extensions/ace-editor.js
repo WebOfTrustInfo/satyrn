@@ -17,11 +17,10 @@ showdown.extension('aceEditor', () => {
     {
       type: 'output',
       filter: function (text) {
-        for (var i=0; i< content.length; ++i) {
-          let key = "editor-"+i;
-          var pat = '<p>%EDITOR' + i + '% *<\/p>';
-          text = text.replace(new RegExp(pat, 'gi'), state.getEditorHtml(content[i], key));
-          state.editors[key] = null;
+        for (var index=0; index< content.length; ++index) {
+          var pat = '<p>%EDITOR' + index + '% *<\/p>';
+          text = text.replace(new RegExp(pat, 'gi'), state.getEditorHtml(content[index], index));
+          state.editors[index] = null;
         }
         //reset array
         content = [];
